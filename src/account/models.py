@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth.password_validation import validate_password
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 class AccountManager(BaseUserManager):
     
@@ -82,3 +84,11 @@ class Account(AbstractBaseUser, PermissionsMixin):
     
     def has_module_perms(self, app_label):
         return True
+
+
+# Before deleting user from data base, setting author of blog posts as Deleted User
+@receiver(pre_delete, sender=Account)
+def set_authors_of_post_as_deleted_user(sender, instance, *args, **kwargs):
+    pass
+
+    
