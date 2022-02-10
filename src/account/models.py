@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth.password_validation import validate_password
-from django.db.models.signals import pre_delete
+from django.db.models.signals import pre_delete, post_save
 from django.dispatch import receiver
+from user_profile.models import User_profile
 
 class AccountManager(BaseUserManager):
     
@@ -55,8 +56,8 @@ class AccountManager(BaseUserManager):
 class Account(AbstractBaseUser, PermissionsMixin):
     email                    = models.EmailField(verbose_name="email", max_length=60, unique=True)
     nickname                 = models.CharField(verbose_name="nick", max_length=30, unique=True)
-    first_name               = models.CharField(verbose_name="first_name", max_length=30, unique=False)
-    last_name                = models.CharField(verbose_name="last_name", max_length=30, unique=False)
+    first_name               = models.CharField(verbose_name="first_name", max_length=30, unique=False, blank=True, null=True)
+    last_name                = models.CharField(verbose_name="last_name", max_length=30, unique=False, blank=True, null=True)
     date_joined              = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     last_login               = models.DateTimeField(verbose_name='last login', auto_now=True)
     is_admin                 = models.BooleanField(default=False)
@@ -91,4 +92,9 @@ class Account(AbstractBaseUser, PermissionsMixin):
 def set_authors_of_post_as_deleted_user(sender, instance, *args, **kwargs):
     pass
 
+# After creating user, creating profile for him
+@receiver(post_save, sender=Account)
+def create_profile_for_user(sender, instance, *args, **kwargs):
+    new_user_profile = User_profile.objects.create(account=instance)
+    new_user_profile.save()
     

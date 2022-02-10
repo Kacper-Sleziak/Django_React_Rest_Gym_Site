@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'blog',
     'frontend',
     'user_profile',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

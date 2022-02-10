@@ -26,7 +26,7 @@ class BlogPost(models.Model):
     released_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateField(auto_now=True)
     slug = models.SlugField(max_length=50, blank=True)
-    image = models.ImageField(upload_to=image_upload_location, blank=True, unique=True)
+    image = models.ImageField(upload_to=image_upload_location, blank=True)
     likes = models.IntegerField(default=0, blank=True)
     
     def __str__(self):
@@ -41,7 +41,7 @@ class Comment(models.Model):
     author= models.ForeignKey(settings.AUTH_USER_MODEL, null=False, blank=False, on_delete=models.CASCADE)
     blog_post = models.ForeignKey(BlogPost, null=False, blank=False, on_delete=models.CASCADE)
 
-# Handling slug creating
+# Handling slug create
 @receiver(pre_save, sender=BlogPost)
 def slug_adder(sender, instance, *args, **kwargs):
     unique_number = 2
