@@ -1,5 +1,4 @@
 from django.urls import path
-from account.serializers import CreateAccountSerializer
 from account.views import AccountView, Account, CreateAccountView
 
 urlpatterns = [

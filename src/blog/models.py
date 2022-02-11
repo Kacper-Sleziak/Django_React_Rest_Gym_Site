@@ -3,6 +3,8 @@ from django.db.models.signals import pre_save, pre_delete
 from django.utils.text import slugify
 from django.conf import settings
 from django.dispatch import receiver
+import os
+from gym_site.settings import BASE_DIR
 
 
 TAG_CHOICES = (
@@ -53,18 +55,31 @@ def slug_adder(sender, instance, *args, **kwargs):
     # Change slug if same exsits in data base
     if queryset.exists():
         while queryset.exists():
-            slug = slugify(instance.title + unique_number)
+            slug = slugify(instance.title + f"{unique_number}")
             queryset = BlogPost.objects.all().filter(slug=slug)
             unique_number += 1
     
     instance.slug = slug
-    
+
+# Handling deleting unnecessary folders and images 
 @receiver(pre_delete, sender=BlogPost)
-def delete_image(sender, instance, *args, **kwargs):
-    try:
-        instance.image.delete(save=False)
-    except:
-        pass
+def delete_image_and_empty_folders(sender, instance, *args, **kwargs):
+    
+    folder_link_1 = os.path.join(BASE_DIR, "media_cdn", "blog", "blog_images", 
+                                 f"{instance.author.email}", f"{instance.title}")
+    
+    folder_link_2 = os.path.join(BASE_DIR, "media_cdn", "blog", "blog_images", 
+                                 f"{instance.author.email}")   
+ 
+    instance.image.delete(save=False)
+ 
+    if(len(os.listdir(folder_link_1))==0):
+        os.rmdir(folder_link_1)
+        
+    if(len(os.listdir(folder_link_2))==0):
+        os.rmdir(folder_link_2)
+    
+    
 
     
 

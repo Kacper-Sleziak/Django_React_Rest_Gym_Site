@@ -27,15 +27,6 @@ class UpdateAccountSerializer(ModelSerializer):
         model = Account
         fields=('nickname', 'first_name', 'last_name')
     
-    def update(self, account, validated_data):  
-        account.first_name = validated_data.get('first_name')
-        account.last_name = validated_data.get('last_name')
-        account.nickname= validated_data.get('nickname')
-        account.save()
-        
-        return account
-
-
 
         
     
