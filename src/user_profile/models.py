@@ -17,6 +17,7 @@ class User_profile(models.Model):
     def __str__(self):
         return f"profile of {self.account.email}"
 
+# Delete avatar while deleting profile
 @receiver(pre_delete, sender=User_profile)
 def delete_avatar(sender, instance, *args, **kwargs):
     try:

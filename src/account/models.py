@@ -17,12 +17,6 @@ class AccountManager(BaseUserManager):
         if not password:
             raise ValueError("User must have password!")
         
-        if not first_name:
-            raise ValueError("User must have first name!")
-
-        if not last_name:
-            raise ValueError("User must have last name!")
-
         if validate_password(password) == None:
         
             user = self.model(
