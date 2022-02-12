@@ -1,5 +1,6 @@
+from tkinter import CASCADE
 from django.db import models
-from django.db.models.signals import pre_save, pre_delete
+from django.db.models.signals import pre_save, pre_delete, post_save
 from django.utils.text import slugify
 from django.conf import settings
 from django.dispatch import receiver
@@ -19,16 +20,19 @@ def image_upload_location(instance, filename):
     
     return file_path
 
+# ---MODELS SECTION---
+
 # Model Of Blog Post
 class BlogPost(models.Model):
     title = models.CharField(max_length=50, null=False, blank=False)
     body = models.TextField(max_length=5000, null=False, blank=False)
+    short = models.TextField(max_length=250, null=False, blank=False)
     tag = models.CharField(max_length=15, choices=TAG_CHOICES, null=False, blank=False, default='SPORT')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, null=False, blank=False, on_delete=models.CASCADE)
     released_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateField(auto_now=True)
     slug = models.SlugField(max_length=50, blank=True)
-    image = models.ImageField(upload_to=image_upload_location, blank=True)
+    image = models.ImageField(upload_to=image_upload_location, blank=False, null=False)
     likes = models.IntegerField(default=0, blank=True)
     
     def __str__(self):
@@ -42,42 +46,23 @@ class Comment(models.Model):
     edited = models.DateField(auto_now=True)
     author= models.ForeignKey(settings.AUTH_USER_MODEL, null=False, blank=False, on_delete=models.CASCADE)
     blog_post = models.ForeignKey(BlogPost, null=False, blank=False, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        str = f"'{self.blog_post.title}' from {self.author}"
+        return  str
+    
+# Model of relation beetwen blog post and person who liked the post
+class BlogLike(models.Model):
+    blog_post = models.ForeignKey(BlogPost, null=False, blank=False, on_delete=models.CASCADE)
+    liker = models.ForeignKey(settings.AUTH_USER_MODEL, null=False, blank=False, on_delete=models.CASCADE)
 
-# Handling slug create
-@receiver(pre_save, sender=BlogPost)
-def slug_adder(sender, instance, *args, **kwargs):
-    unique_number = 2
-    slug = slugify(instance.title)
+# Model of relation beetwen comment and person who liked the comment
+class CommentLike(models.Model):
+    comment = models.ForeignKey(Comment, null=False, blank=False, on_delete=models.CASCADE)
+    liker = models.ForeignKey(settings.AUTH_USER_MODEL, null=False, blank=False, on_delete=models.CASCADE)
     
-    # Checking if in data base is blog post with same slug
-    queryset = BlogPost.objects.all().filter(slug=slug)
-    
-    # Change slug if same exsits in data base
-    if queryset.exists():
-        while queryset.exists():
-            slug = slugify(instance.title + f"{unique_number}")
-            queryset = BlogPost.objects.all().filter(slug=slug)
-            unique_number += 1
-    
-    instance.slug = slug
 
-# Handling deleting unnecessary folders and images 
-@receiver(pre_delete, sender=BlogPost)
-def delete_image_and_empty_folders(sender, instance, *args, **kwargs):
     
-    folder_link_1 = os.path.join(BASE_DIR, "media_cdn", "blog", "blog_images", 
-                                 f"{instance.author.email}", f"{instance.title}")
-    
-    folder_link_2 = os.path.join(BASE_DIR, "media_cdn", "blog", "blog_images", 
-                                 f"{instance.author.email}")   
- 
-    instance.image.delete(save=False)
- 
-    if(len(os.listdir(folder_link_1))==0):
-        os.rmdir(folder_link_1)
-        
-    if(len(os.listdir(folder_link_2))==0):
-        os.rmdir(folder_link_2)
     
     
 
