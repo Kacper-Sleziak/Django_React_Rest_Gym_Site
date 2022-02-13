@@ -9,7 +9,8 @@ def set_authors_of_post_as_deleted_user(sender, instance, *args, **kwargs):
 
 # After creating user, creating profile for him
 @receiver(post_save, sender=Account)
-def create_profile_for_user(sender, instance, *args, **kwargs):
-    new_user_profile = User_profile.objects.create(account=instance)
-    new_user_profile.save()
+def create_profile_for_user(sender, instance, created=False, *args, **kwargs):
+    if created:
+        new_user_profile = User_profile.objects.create(account=instance)
+        new_user_profile.save()
 

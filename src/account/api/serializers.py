@@ -1,32 +1,42 @@
 from cmath import acos
-import email
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, CharField, ValidationError
 from account.models import Account
 from django.contrib.auth.hashers import make_password
+
+from blog.api import serializers
 
 
 class AccountSerializer(ModelSerializer):
     class Meta:
         model = Account
-        fields = '__all__'
+        fields = ('email', 'nickname', 'first_name', 'last_name', 'date_joined',
+                'last_login', 'is_admin', 'is_staff', 'is_superuser')
 
 class CreateAccountSerializer(ModelSerializer):
+    
+    password = CharField(style={'input_type': 'password'}, write_only=True)
+    password2 = CharField(style={'input_type': 'password'}, write_only=True)
+    
     class Meta:
         model = Account
-        fields = ('nickname', 'email', 'password')
+        fields = ('nickname', 'email', 'password', 'password2')
     
-    def create(self, validated_data):
-        email = validated_data.get('email')
-        nickname = validated_data.get('nickname')
-        password = make_password(validated_data.get('password'))
+    def save(self):
+        account = Account(
+            email=self.validated_data['email'],
+            nickname=self.validated_data['nickname']
+        )
+        password = self.validated_data['password']
+        password2 = self.validated_data['password2']
+        if password != password2:
+            raise ValidationError({'password': 'Passwords are not the same.'})
+        account.set_password(password)
+        account.save()
+        return account
+  
 
-        return Account.objects.create(email=email, nickname=nickname, password=password)
-        
 class UpdateAccountSerializer(ModelSerializer):
     class Meta:
         model = Account
         fields=('nickname', 'first_name', 'last_name')
-    
-
         
-    

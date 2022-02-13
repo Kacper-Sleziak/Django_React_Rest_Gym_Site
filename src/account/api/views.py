@@ -1,9 +1,12 @@
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.contrib.auth import authenticate
+from account.api import serializers
 # Imports from project
 from account.models import Account as AccountModel
-from account.api.serializers import AccountSerializer, CreateAccountSerializer, UpdateAccountSerializer
+from account.api.serializers import (AccountSerializer, CreateAccountSerializer, 
+                                     UpdateAccountSerializer)
 
 # Create your views here.
 class AccountView(generics.ListAPIView):
@@ -64,4 +67,6 @@ class CreateAccountView(APIView):
             return Response(AccountSerializer(account).data, status=status.HTTP_200_OK)
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
+
+        
