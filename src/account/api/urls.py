@@ -1,5 +1,5 @@
 from django.urls import path
-from account.views import AccountView, Account, CreateAccountView
+from account.api.views import AccountView, Account, CreateAccountView, Account
 
 urlpatterns = [
     path('users/', AccountView.as_view()),

@@ -61,18 +61,3 @@ class CommentLike(models.Model):
     comment = models.ForeignKey(Comment, null=False, blank=False, on_delete=models.CASCADE)
     liker = models.ForeignKey(settings.AUTH_USER_MODEL, null=False, blank=False, on_delete=models.CASCADE)
     
-
-    
-    
-    
-
-    
-
-
-        
-        
-        
-    
-    
-    
-    

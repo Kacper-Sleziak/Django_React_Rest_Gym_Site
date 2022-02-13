@@ -12,4 +12,4 @@ def set_authors_of_post_as_deleted_user(sender, instance, *args, **kwargs):
 def create_profile_for_user(sender, instance, *args, **kwargs):
     new_user_profile = User_profile.objects.create(account=instance)
     new_user_profile.save()
-    
+

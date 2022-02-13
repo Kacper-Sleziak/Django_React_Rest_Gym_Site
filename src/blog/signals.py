@@ -5,8 +5,7 @@ from gym_site.settings import BASE_DIR
 import os
 from blog.models import BlogPost, Comment, BlogLike, CommentLike
 
-
-# Handling slug creating
+# Handling slug creating 
 @receiver(pre_save, sender=BlogPost)
 def slug_adder(sender, instance, *args, **kwargs):
     unique_number = 2

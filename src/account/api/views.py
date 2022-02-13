@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 # Imports from project
 from account.models import Account as AccountModel
-from account.serializers import AccountSerializer, CreateAccountSerializer, UpdateAccountSerializer
+from account.api.serializers import AccountSerializer, CreateAccountSerializer, UpdateAccountSerializer
 
 # Create your views here.
 class AccountView(generics.ListAPIView):
