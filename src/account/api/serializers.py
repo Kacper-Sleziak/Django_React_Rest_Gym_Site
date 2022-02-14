@@ -30,6 +30,7 @@ class CreateAccountSerializer(ModelSerializer):
         password2 = self.validated_data['password2']
         if password != password2:
             raise ValidationError({'password': 'Passwords are not the same.'})
+        # TO DO EXTENDED PASSWORD VALIDATION
         account.set_password(password)
         account.save()
         return account
@@ -39,4 +40,3 @@ class UpdateAccountSerializer(ModelSerializer):
     class Meta:
         model = Account
         fields=('nickname', 'first_name', 'last_name')
-        
