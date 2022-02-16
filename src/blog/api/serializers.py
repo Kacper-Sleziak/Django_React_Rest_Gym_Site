@@ -19,6 +19,8 @@ class CreateCommentSerializer(ModelSerializer):
         fields = ('body', 'author', 'blog_post')
 
 class CommentSerializer(ModelSerializer):
+    # TO DO EXTEND SERIALIZER TO SHOW NICKNAME OF COMMENT AUTHOR NOT ID
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ('body', 'author', 'likes', 'released_date', 
+                'edited')
