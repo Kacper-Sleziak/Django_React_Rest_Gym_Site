@@ -34,6 +34,9 @@ class CreateAccountSerializer(ModelSerializer):
         account.set_password(password)
         account.save()
         return account
+    
+    def validate(self, attrs):
+        return super().validate(attrs)
   
 
 class UpdateAccountSerializer(ModelSerializer):

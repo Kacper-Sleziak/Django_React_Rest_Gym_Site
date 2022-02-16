@@ -15,7 +15,7 @@ def create_profile_for_user(sender, instance, created=False, *args, **kwargs):
         new_user_profile = User_profile.objects.create(account=instance)
         new_user_profile.save()
 
-# Create auth token for new user
+# Create token for new user
 @receiver(post_save, sender=Account)
 def create_profile_for_user(sender, instance, created=False, *args, **kwargs):
     if created:

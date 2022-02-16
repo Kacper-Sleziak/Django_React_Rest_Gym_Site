@@ -1,15 +1,17 @@
 from rest_framework.serializers import ModelSerializer
 from blog.models import BlogPost, Comment
 
-class CreateBlogPostSerializer(ModelSerializer):    
+# to change author in serializer should be email
+class CreateBlogPostSerializer(ModelSerializer):  
     class Meta:
         model = BlogPost
         fields = ('title', 'body', 'tag', 'author', 'image', 'short')
-
+        
 class BlogPostSerializer(ModelSerializer):    
     class Meta:
         model = BlogPost
-        fields = '__all__'
+        fields = ('title', 'body', 'short', 'tag', 'image', 'short', 
+                  'released_date', 'last_update', 'slug', 'likes')
 
 class CreateCommentSerializer(ModelSerializer):
     class Meta:
