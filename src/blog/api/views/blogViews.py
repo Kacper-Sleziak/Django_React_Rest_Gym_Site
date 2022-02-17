@@ -30,12 +30,11 @@ class CreateBlogPostView(APIView):
         if serializer.is_valid():
             user = request.user
             
-            # Only admin can create blog post
+            #Only admin can create blog post
             if user.is_admin:
                 new_blog_post = serializer.save()
                 serializer = BlogPostSerializer(new_blog_post)
-                response_data = append_author_fields_to_response(serializer.data, user)
-                return Response(response_data, status=status.HTTP_201_CREATED)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(status=status.HTTP_403_FORBIDDEN)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -96,8 +95,7 @@ def blog_post_get(request, slug):
     if queryset.exists():
         blog_post = queryset[0]
         serializer = BlogPostSerializer(blog_post)
-        response_data = append_author_fields_to_response(serializer.data, blog_post.author)
-        return Response(response_data , status=status.HTTP_200_OK)
+        return Response(serializer.data , status=status.HTTP_200_OK)
     return Response(status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET', ])
@@ -113,12 +111,3 @@ def blog_post_get_all_posts_of_author(request, email):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_204_NO_CONTENT)
     return Response(status=status.HTTP_404_NOT_FOUND)
-
-# Extend serialization by adding 2 fields to dict
-def append_author_fields_to_response(serialized_data, user):
-    email = user.email
-    nickname = user.nickname
-    serialized_data['author_email'] = email
-    serialized_data['author_nickname'] = nickname
-    
-    return serialized_data
