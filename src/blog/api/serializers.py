@@ -1,8 +1,10 @@
 from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from blog.models import BlogPost, Comment
 
-# to change author in serializer should be email
 class CreateBlogPostSerializer(ModelSerializer):  
+    author = serializers.StringRelatedField()
+    
     class Meta:
         model = BlogPost
         fields = ('title', 'body', 'tag', 'author', 'image', 'short')
@@ -19,8 +21,10 @@ class CreateCommentSerializer(ModelSerializer):
         fields = ('body', 'author', 'blog_post')
 
 class CommentSerializer(ModelSerializer):
-    # TO DO EXTEND SERIALIZER TO SHOW NICKNAME OF COMMENT AUTHOR NOT ID
+    author = serializers.StringRelatedField()
+    
     class Meta:
         model = Comment
-        fields = ('body', 'author', 'likes', 'released_date', 
-                'edited')
+        fields = ('body', 'likes', 'released_date', 
+                'edited', 'author')
+        

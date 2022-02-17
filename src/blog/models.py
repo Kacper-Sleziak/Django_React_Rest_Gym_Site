@@ -1,11 +1,5 @@
-from tkinter import CASCADE
 from django.db import models
-from django.db.models.signals import pre_save, pre_delete, post_save
-from django.utils.text import slugify
 from django.conf import settings
-from django.dispatch import receiver
-import os
-from gym_site.settings import BASE_DIR
 
 
 TAG_CHOICES = (
@@ -19,8 +13,6 @@ def image_upload_location(instance, filename):
     file_path = f"blog/blog_images/{instance.author.email}/{instance.title}/{filename}"
     
     return file_path
-
-# ---MODELS SECTION---
 
 # Model Of Blog Post
 class BlogPost(models.Model):
@@ -44,7 +36,8 @@ class Comment(models.Model):
     likes = models.IntegerField(default=0, blank=True)
     released_date = models.DateTimeField(auto_now_add=True)
     edited = models.DateField(auto_now=True)
-    author= models.ForeignKey(settings.AUTH_USER_MODEL, null=False, blank=False, on_delete=models.CASCADE)
+    author= models.ForeignKey(settings.AUTH_USER_MODEL, null=False, blank=False, 
+                              on_delete=models.CASCADE, related_name='author')
     blog_post = models.ForeignKey(BlogPost, null=False, blank=False, on_delete=models.CASCADE)
     
     def __str__(self):

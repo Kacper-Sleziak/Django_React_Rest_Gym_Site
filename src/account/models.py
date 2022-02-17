@@ -1,9 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth.password_validation import validate_password
-from django.db.models.signals import pre_delete, post_save
-from django.dispatch import receiver
-from user_profile.models import User_profile
 
 class AccountManager(BaseUserManager):
     
@@ -67,7 +64,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
 
     def __str__(self):
-        return self.email
+        return self.nickname
 
     @property
     def full_name(self):

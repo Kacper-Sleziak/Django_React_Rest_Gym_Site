@@ -6,8 +6,8 @@ from blog.api.views.commentsViews import CreateCommentView, CommentView, get_com
 urlpatterns = [
     path('', AllBlogPosts.as_view()),
     path('create', CreateBlogPostView.as_view()),
-    path('<int:pk>', BlogPostView.as_view()),
-    path('<str:slug>/', blog_post_get),
+    path('operations/<str:slug>', BlogPostView.as_view()),
+    path('<str:slug>', blog_post_get),
     path('author/<str:email>/', blog_post_get_all_posts_of_author),
     path('comment/create/', CreateCommentView.as_view()),
     path('comment/<int:pk>', CommentView.as_view()),

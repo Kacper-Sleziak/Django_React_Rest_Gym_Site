@@ -75,7 +75,7 @@ def get_comments_of_blog_post(request, slug):
     queryset = BlogPost.objects.filter(slug=slug)
     if queryset.exists():
         blog_post = queryset[0]
-        queryset = CommentModel.objects.filter(blog_post = blog_post)
+        queryset = CommentModel.objects.filter(blog_post=blog_post)
         
         if queryset.exists():
             serializer = CommentSerializer(queryset, many=True)

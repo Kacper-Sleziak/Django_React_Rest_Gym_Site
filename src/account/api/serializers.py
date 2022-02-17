@@ -1,10 +1,5 @@
-from cmath import acos
 from rest_framework.serializers import ModelSerializer, CharField, ValidationError
 from account.models import Account
-from django.contrib.auth.hashers import make_password
-
-from blog.api import serializers
-
 
 class AccountSerializer(ModelSerializer):
     class Meta:

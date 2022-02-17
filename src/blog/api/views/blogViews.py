@@ -45,8 +45,8 @@ class BlogPostView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
-    def is_blog_post_with_given_id(self, pk):
-        queryset = BlogPostModel.objects.filter(id=pk)
+    def is_blog_post_with_given_slug(self, slug):
+        queryset = BlogPostModel.objects.filter(slug=slug)
         if queryset.exists():
             return True
         else:
@@ -62,11 +62,11 @@ class BlogPostView(APIView):
         else:
             return False
         
-    def put(self, request, pk, format=None):
-        if not self.is_blog_post_with_given_id(pk):
+    def put(self, request, slug, format=None):
+        if not self.is_blog_post_with_given_slug(slug):
             return Response(status=status.HTTP_404_NOT_FOUND)
         
-        blog_post = BlogPostModel.objects.get(id=pk)
+        blog_post = BlogPostModel.objects.get(slug=slug)
         serializer = self.serializer_class(blog_post, data=request.data)
         
         if serializer.is_valid():
@@ -77,12 +77,12 @@ class BlogPostView(APIView):
                 return Response(status=status.HTTP_403_FORBIDDEN)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-    def delete(self, request, pk, format=None):
-        if not self.is_blog_post_with_given_id(pk):
+    def delete(self, request, slug, format=None):
+        if not self.is_blog_post_with_given_slug(slug):
             return Response(status=status.HTTP_404_NOT_FOUND)
         
         if self.is_user_author_of_blog_post:
-            blog_post = BlogPostModel.objects.get(id=pk)
+            blog_post = BlogPostModel.objects.get(slug=slug)
             blog_post.delete()
             return Response(status=status.HTTP_200_OK)
         else:
