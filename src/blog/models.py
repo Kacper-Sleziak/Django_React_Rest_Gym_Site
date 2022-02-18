@@ -28,7 +28,7 @@ class BlogPost(models.Model):
     likes = models.IntegerField(default=0, blank=True)
     
     def __str__(self):
-        return self.title
+        return self.slug
 
 # Model Of Comment
 class Comment(models.Model):

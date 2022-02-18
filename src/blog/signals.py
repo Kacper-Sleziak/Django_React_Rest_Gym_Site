@@ -11,17 +11,19 @@ def slug_adder(sender, instance, *args, **kwargs):
     unique_number = 2
     slug = slugify(instance.title)
     
-    # Checking if in data base is blog post with same slug
-    queryset = BlogPost.objects.all().filter(slug=slug)
-    
-    # Change slug if same exsits in data base
-    if queryset.exists():
-        while queryset.exists():
-            slug = slugify(instance.title + f"{unique_number}")
-            queryset = BlogPost.objects.all().filter(slug=slug)
-            unique_number += 1
-    
-    instance.slug = slug
+    # Avoid changing slug while editing blog post object
+    if instance.slug != slug:
+        # Checking if in data base is blog post with same slug
+        queryset = BlogPost.objects.all().filter(slug=slug)
+        
+        # Change slug if same exsits in data base
+        if queryset.exists() :
+            while queryset.exists():
+                slug = slugify(instance.title + f"{unique_number}")
+                queryset = BlogPost.objects.all().filter(slug=slug)
+                unique_number += 1
+        
+        instance.slug = slug
 
 # Handling deleting unnecessary folders and images 
 @receiver(pre_delete, sender=BlogPost)
@@ -47,7 +49,8 @@ def delete_image_and_empty_folders(sender, instance, *args, **kwargs):
 # object - instance of model with likes (BlogPost or Comment)
 # likes_change - number of likes to add (for example 1 for like or -1 for unlike)
 def LikesHandler(object, likes_change):
-    likes = object.likes 
+
+    likes = object.likes
     likes = likes + likes_change
     object.likes = likes
     object.save()
