@@ -55,7 +55,7 @@ class EditUserProfile(APIView):
             serializer = self.serializer_class(user_profile, data=request.data)
             if serializer.is_valid() and self.is_user_owner_of_profile(request, user):
                 serializer.save()
-                return Response(status=status.HTTP_200_OK)
+                return Response(UserProfileSerializer(user_profile).data, status=status.HTTP_200_OK)
             return Response(status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_404_NOT_FOUND)
             

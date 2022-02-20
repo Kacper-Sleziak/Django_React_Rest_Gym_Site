@@ -44,7 +44,6 @@ def delete_image_and_empty_folders(sender, instance, *args, **kwargs):
     if(len(os.listdir(author_image_blog_folder))==0):
         os.rmdir(author_image_blog_folder)
         
-
 # Changing number of likes 
 # object - instance of model with likes (BlogPost or Comment)
 # likes_change - number of likes to add (for example 1 for like or -1 for unlike)

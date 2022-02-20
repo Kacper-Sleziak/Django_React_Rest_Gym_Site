@@ -1,4 +1,3 @@
-from urllib import request
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -36,8 +35,6 @@ def like_blog_post_view(request):
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(stauts=status.HTTP_400_BAD_REQUEST)
         
-            
-
 @permission_classes((IsAuthenticated,)) 
 @api_view(['DELETE', 'POST',])
 def like_comment_view(request):

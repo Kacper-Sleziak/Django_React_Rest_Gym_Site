@@ -1,4 +1,3 @@
-from django.forms import ValidationError
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from account.models import Account
@@ -60,7 +59,6 @@ class BlogLikeSerializer(ModelSerializer):
         comment_author_nickname = self.validated_data['liker']
         blog_post = BlogPost.objects.get(slug=blog_post_slug)
         liker = Account.objects.get(nickname=comment_author_nickname) 
-        
         queryset = BlogLike.objects.filter(blog_post=blog_post, liker=liker)
         
         # When blog post is arleady liked by user we delete that ,,like"
@@ -84,8 +82,7 @@ class CommentLikeSerializer(ModelSerializer):
             comment_id = self.validated_data['comment']
             comment_author_nickname = self.validated_data['liker']
             comment = Comment.objects.get(id=comment_id)
-            liker = Account.objects.get(nickname=comment_author_nickname) 
-            
+            liker = Account.objects.get(nickname=comment_author_nickname)  
             queryset = CommentLike.objects.filter(comment=comment, liker=liker)
             
             # When blog post is arleady liked by user we delete that ,,like"

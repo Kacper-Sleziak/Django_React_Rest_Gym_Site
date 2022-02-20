@@ -15,7 +15,6 @@ class AccountManager(BaseUserManager):
             
             user.set_password(password)
             user.save(using=self._db)    
-            
             return user
         
     def create_superuser(self, email, nickname, first_name, last_name, password):
@@ -35,17 +34,16 @@ class AccountManager(BaseUserManager):
         return user
 
 class Account(AbstractBaseUser, PermissionsMixin):
-    email                    = models.EmailField(verbose_name="email", max_length=60, unique=True)
-    nickname                 = models.CharField(verbose_name="nick", max_length=30, unique=True)
-    first_name               = models.CharField(verbose_name="first_name", max_length=30, unique=False, blank=True, null=True)
-    last_name                = models.CharField(verbose_name="last_name", max_length=30, unique=False, blank=True, null=True)
-    date_joined              = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
-    last_login               = models.DateTimeField(verbose_name='last login', auto_now=True)
-    is_admin                 = models.BooleanField(default=False)
-    is_active                = models.BooleanField(default=True)
-    is_staff                 = models.BooleanField(default=False)
-    is_superuser             = models.BooleanField(default=False)
-     
+    email = models.EmailField(verbose_name="email", max_length=60, unique=True)
+    nickname = models.CharField(verbose_name="nick", max_length=30, unique=True)
+    first_name = models.CharField(verbose_name="first_name", max_length=30, unique=False, blank=True, null=True)
+    last_name = models.CharField(verbose_name="last_name", max_length=30, unique=False, blank=True, null=True)
+    date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
+    last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
+    is_admin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
      
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['nickname', 'first_name', 'last_name']
