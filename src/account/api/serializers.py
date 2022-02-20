@@ -1,12 +1,21 @@
 from rest_framework.serializers import ModelSerializer, CharField, ValidationError
+from django.core.validators import EmailValidator
 from account.models import Account
+
+class LoginSerializer(ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ('email' ,'password')
+        extra_kwargs = {
+            'email': {'validators': [EmailValidator,]},
+        }
 
 class AccountSerializer(ModelSerializer):
     class Meta:
         model = Account
         fields = ('email', 'nickname', 'first_name', 'last_name', 'date_joined',
                 'last_login', 'is_admin', 'is_staff', 'is_superuser')
-
+        
 class CreateAccountSerializer(ModelSerializer):
     
     password = CharField(style={'input_type': 'password'}, write_only=True)
@@ -32,8 +41,7 @@ class CreateAccountSerializer(ModelSerializer):
     
     def validate(self, attrs):
         return super().validate(attrs)
-  
-
+    
 class UpdateAccountSerializer(ModelSerializer):
     class Meta:
         model = Account

@@ -1,4 +1,5 @@
 from django.db.models.signals import pre_delete, post_save
+from django.conf import settings
 from django.dispatch import receiver
 from account.models import Account
 from user_profile.models import User_profile
@@ -20,6 +21,6 @@ def create_profile_for_user(sender, instance, created=False, *args, **kwargs):
 @receiver(post_save, sender=Account)
 def create_profile_for_user(sender, instance, created=False, *args, **kwargs):
     if created:
-        new_token = Token(user=instance)
-        new_token.save()
+        Token.objects.create(user=instance)
+    
     

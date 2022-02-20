@@ -3,7 +3,6 @@ from rest_framework import generics, status
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from blog.api.views.blogViews import blog_post_get
 # Imports from project
 from blog.models import BlogPost, Comment as CommentModel
 from rest_framework.authentication import TokenAuthentication
