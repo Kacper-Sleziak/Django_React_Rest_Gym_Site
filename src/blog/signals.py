@@ -39,7 +39,7 @@ def delete_image_and_empty_folders(sender, instance, *args, **kwargs):
     
     # Deleting empty folders
     if(len(os.listdir(title_image_blog_folder ))==0):
-        os.rmdir(title_image_blog_folder )
+        os.rmdir(title_image_blog_folder)
         
     if(len(os.listdir(author_image_blog_folder))==0):
         os.rmdir(author_image_blog_folder)
