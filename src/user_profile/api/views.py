@@ -2,7 +2,7 @@ from asyncio.windows_events import NULL
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
-from rest_framework import generics, status
+from rest_framework import status
 from user_profile.models import User_profile
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -17,6 +17,7 @@ def get_user_with_given_nickname(nickname):
             return queryset[0]
         else:
             NULL
+            
 # [GET] Getting information of user profile with informations about account              
 class GetUserProfile(APIView):        
     def get(self, request, nickname):
@@ -37,16 +38,22 @@ class EditUserProfile(APIView):
     serializer_class = UserProfileSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
     
-    def is_user_owner_of_profile():
-        pass
+    def is_user_owner_of_profile(self, request, profile_author):
+        user = request.user 
+        
+        if user == profile_author:
+            return True
+        else:
+            return False
     
     def put(self, request, nickname):
         user = get_user_with_given_nickname(nickname)
         if user != NULL:
             user_profile = User_profile.objects.get(account=user)
             serializer = self.serializer_class(user_profile, data=request.data)
-            if serializer.is_valid():
+            if serializer.is_valid() and self.is_user_owner_of_profile(request, user):
                 serializer.save()
                 return Response(status=status.HTTP_200_OK)
             return Response(status=status.HTTP_400_BAD_REQUEST)
