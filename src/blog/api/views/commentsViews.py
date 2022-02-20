@@ -9,7 +9,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from blog.api.serializers import (CommentSerializer, CreateCommentSerializer)
 
-#API create comment View [POST]
+#[POST] Create comment API View 
 class CreateCommentView(APIView):
     serializer_class = CreateCommentSerializer
     authentication_classes = [TokenAuthentication]
@@ -22,7 +22,7 @@ class CreateCommentView(APIView):
             return Response(CommentSerializer(new_comment).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# API comment View [GET, DELETE]
+# [GET, DELETE] API comment View 
 class CommentView(APIView):
     serializer_class = CommentSerializer
     

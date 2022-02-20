@@ -5,17 +5,7 @@ from django.contrib.auth.password_validation import validate_password
 class AccountManager(BaseUserManager):
     
     def create_user(self, email, nickname, first_name, last_name, password=None):
-        if not email:
-            raise ValueError("User must have an email")        
-        
-        if not nickname:
-            raise ValueError("User must have an nickname")
-        
-        if not password:
-            raise ValueError("User must have password!")
-        
-        if validate_password(password) == None:
-        
+                
             user = self.model(
                 email = self.normalize_email(email),
                 nickname = nickname,
@@ -56,12 +46,11 @@ class Account(AbstractBaseUser, PermissionsMixin):
     is_staff                 = models.BooleanField(default=False)
     is_superuser             = models.BooleanField(default=False)
      
-
+     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['nickname', 'first_name', 'last_name']
 
     objects = AccountManager()
-
 
     def __str__(self):
         return self.nickname

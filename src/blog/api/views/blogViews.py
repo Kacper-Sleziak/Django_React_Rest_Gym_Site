@@ -10,14 +10,14 @@ from blog.models import BlogPost as BlogPostModel
 from account.models import Account as AccountModel
 from blog.api.serializers import BlogPostSerializer, CreateBlogPostSerializer
 
-# Blog Posts View [GET]
+# [GET] Blog Posts View 
 class AllBlogPosts(generics.ListAPIView):
     queryset = BlogPostModel.objects.all()
     serializer_class = BlogPostSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-# Create Blog Post API View [POST]
+# [POST] Create Blog Post API View 
 class CreateBlogPostView(APIView):
     serializer_class = CreateBlogPostSerializer
     authentication_classes = [TokenAuthentication]
@@ -37,7 +37,7 @@ class CreateBlogPostView(APIView):
             return Response(status=status.HTTP_403_FORBIDDEN)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-# Blog Post API View [PUT, DELETE]
+# [PUT, DELETE] Blog Post API View 
 class BlogPostView(APIView):
     serializer_class = BlogPostSerializer
     authentication_classes = [TokenAuthentication]
@@ -86,7 +86,7 @@ class BlogPostView(APIView):
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-# [GET] don't need to be protected with authorization 
+# [GET] blog post get don't need to be protected with authorization 
 @api_view(['GET', ])
 def blog_post_get(request, slug):
     queryset = BlogPostModel.objects.filter(slug=slug) 

@@ -17,7 +17,7 @@ def get_user_with_given_nickname(nickname):
             return queryset[0]
         else:
             NULL
-                
+# [GET] Getting information of user profile with informations about account              
 class GetUserProfile(APIView):        
     def get(self, request, nickname):
         user = get_user_with_given_nickname(nickname)
@@ -31,11 +31,15 @@ class GetUserProfile(APIView):
             feedback_data['description'] = user_profile_serializer.data['description']
             return Response(feedback_data, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_404_NOT_FOUND)
-    
+
+# [PUT] Edit User Profile View
 class EditUserProfile(APIView):
     serializer_class = UserProfileSerializer
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def is_user_owner_of_profile():
+        pass
     
     def put(self, request, nickname):
         user = get_user_with_given_nickname(nickname)

@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 from account.models import Account as AccountModel
 from account.api.serializers import (AccountSerializer, CreateAccountSerializer, LoginSerializer, 
                                      UpdateAccountSerializer)
-
+# [POST] Login API View
 class Login(APIView):
     serializer_class = LoginSerializer
 
@@ -30,12 +30,12 @@ class Login(APIView):
             return Response({'error': "Email or password is not correct!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-# Create your views here.
+# [GET] Get all accounts .
 class AccountView(generics.ListAPIView):
     queryset = AccountModel.objects.all()
     serializer_class = AccountSerializer
     
-# Account View
+# [PUT, DELETE] Account View
 class Account(APIView):
     serializer_class = UpdateAccountSerializer
 
@@ -77,7 +77,7 @@ class Account(APIView):
         
         return Response(status=status.HTTP_200_OK)
         
-# View Creating Account by post request
+# [POST] View Creating Account by post request
 class CreateAccountView(APIView):
     serializer_class = CreateAccountSerializer
     
