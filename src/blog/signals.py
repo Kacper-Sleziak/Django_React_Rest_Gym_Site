@@ -3,7 +3,7 @@ from django.utils.text import slugify
 from django.dispatch import receiver
 from gym_site.settings import BASE_DIR
 import os
-from blog.models import BlogPost, Comment, BlogLike, CommentLike
+from blog.models import BlogPost, BlogLike, CommentLike
 
 # Handling slug creating 
 @receiver(pre_save, sender=BlogPost)

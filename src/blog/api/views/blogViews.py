@@ -1,21 +1,22 @@
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 # Imports from project
 from blog.models import BlogPost as BlogPostModel
 from account.models import Account as AccountModel
 from blog.api.serializers import BlogPostSerializer, CreateBlogPostSerializer
+from blog.api.pagination import BlogPostsPagination
 
 # [GET] Blog Posts View 
 class AllBlogPosts(generics.ListAPIView):
     queryset = BlogPostModel.objects.all()
     serializer_class = BlogPostSerializer
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    pagination_class = BlogPostsPagination
 
 # [POST] Create Blog Post API View 
 class CreateBlogPostView(APIView):
@@ -37,11 +38,11 @@ class CreateBlogPostView(APIView):
             return Response(status=status.HTTP_403_FORBIDDEN)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-# [PUT, DELETE] Blog Post API View 
+# [GET, PUT, DELETE] Blog Post API View 
 class BlogPostView(APIView):
     serializer_class = BlogPostSerializer
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     
     def is_blog_post_with_given_slug(self, slug):
         queryset = BlogPostModel.objects.filter(slug=slug)
@@ -59,7 +60,14 @@ class BlogPostView(APIView):
             return True
         else:
             return False
-        
+    
+    def get(self, request, slug, format=None):
+        if self.is_blog_post_with_given_slug(slug):
+            blog_post = BlogPostModel.objects.get(slug=slug)
+            
+            return Response(BlogPostSerializer(blog_post).data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
+              
     def put(self, request, slug, format=None):
         if not self.is_blog_post_with_given_slug(slug):
             return Response(status=status.HTTP_404_NOT_FOUND)
@@ -85,17 +93,6 @@ class BlogPostView(APIView):
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
-
-# [GET] blog post get don't need to be protected with authorization 
-@api_view(['GET', ])
-def blog_post_get(request, slug):
-    queryset = BlogPostModel.objects.filter(slug=slug) 
-    
-    if queryset.exists():
-        blog_post = queryset[0]
-        serializer = BlogPostSerializer(blog_post)
-        return Response(serializer.data , status=status.HTTP_200_OK)
-    return Response(status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET', ])
 def blog_post_get_all_posts_of_author(request, email):
