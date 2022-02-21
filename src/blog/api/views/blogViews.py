@@ -1,3 +1,4 @@
+from urllib import request
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
@@ -93,17 +94,13 @@ class BlogPostView(APIView):
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
-
-@api_view(['GET', ])
-def blog_post_get_all_posts_of_author(request, email):
-    queryset = AccountModel.objects.filter(email = email)
+        
+# [GET] Get all blog posts of author
+class BlogPostsOfAuthor(generics.ListAPIView):
+    serializer_class = BlogPostSerializer
     
-    if queryset.exists():
-        author = queryset[0]
-        author_id = author.id 
-        queryset = BlogPostModel.objects.filter(author=author_id)
-        if queryset.exists():  
-            serializer = BlogPostSerializer(queryset, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    return Response(status=status.HTTP_404_NOT_FOUND)
+    def get_queryset(self):
+        nickname = self.kwargs['nickname']
+        author = AccountModel.objects.get(nickname=nickname)
+        return BlogPostModel.objects.all().filter(author=author)
+        

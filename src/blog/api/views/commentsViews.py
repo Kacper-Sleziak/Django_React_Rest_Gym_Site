@@ -3,11 +3,12 @@ from rest_framework import generics, status
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
-# Imports from project
-from blog.models import BlogPost, Comment as CommentModel
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+# Imports from project
+from blog.models import BlogPost, Comment as CommentModel
 from blog.api.serializers import (CommentSerializer, CreateCommentSerializer)
+from blog.api.pagination import CommentsPagination
 
 #[POST] Create comment API View 
 class CreateCommentView(APIView):
@@ -68,16 +69,14 @@ class CommentView(APIView):
             return Response(tatus=status.HTTP_200_OK)
         else:
             return Response(stauts=status.HTTP_403_FORBIDDEN)
+
+# [GET] Returning all comments of blog post
+class CommentsOfBlogPost(generics.ListAPIView):
+    serializer_class = CommentSerializer
+    pagination_class = CommentsPagination
     
-@api_view(['GET', ])
-def get_comments_of_blog_post(request, slug):
-    queryset = BlogPost.objects.filter(slug=slug)
-    if queryset.exists():
-        blog_post = queryset[0]
-        queryset = CommentModel.objects.filter(blog_post=blog_post)
+    def get_queryset(self):
+        slug = self.kwargs['slug']
+        blog_post = BlogPost.objects.get(slug=slug)
+        return CommentModel.objects.all().filter(blog_post=blog_post)
         
-        if queryset.exists():
-            serializer = CommentSerializer(queryset, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    return Response(status=status.HTTP_404_NOT_FOUND)
