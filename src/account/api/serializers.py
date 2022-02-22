@@ -1,8 +1,7 @@
-from rest_framework.serializers import ModelSerializer, CharField, ValidationError
-import django.contrib.auth.password_validation as validators
+from rest_framework.serializers import ModelSerializer, CharField
 from django.core.validators import EmailValidator
 from account.models import Account
-from account.validators import Validator
+from account.validators import PasswordValidator
 
 class LoginSerializer(ModelSerializer):
     class Meta:
@@ -31,10 +30,9 @@ class CreateAccountSerializer(ModelSerializer):
         password = data['password']
         password2 = data['password2']
         
-        validator = Validator(password=password)
-        validator.are_password_same_validate(password2=password2)
-        validator.min_len_validate(length=9)
-        validator.numberal_validate()
+        # Using custome validator
+        password_validator = PasswordValidator(password=password)
+        password_validator.validate(length=9, password2=password2)
         return data
         
     def save(self):

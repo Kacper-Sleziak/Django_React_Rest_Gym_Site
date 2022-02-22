@@ -1,8 +1,14 @@
 from rest_framework.serializers import ValidationError
 
-class Validator():
+class PasswordValidator():
     def __init__(self, password):
         self.password = password
+    
+    # use all validations 
+    def validate(self, length, password2):
+        self.are_password_same_validate(password2)
+        self.min_len_validate(length)
+        self.numberal_validate
     
     def are_password_same_validate(self, password2):
         if self.password != password2:
