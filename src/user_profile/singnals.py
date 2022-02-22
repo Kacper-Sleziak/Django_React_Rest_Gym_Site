@@ -19,6 +19,7 @@ def change_avatar(sender, instance, *args, **kwargs):
     user_email = instance.account.email
     avatar_dir = os.path.join(BASE_DIR, "media_cdn", "profile", user_email, "avatar")
     
-    for file in os.listdir(avatar_dir):
-        if file.__str__ != f"{instance.avatar}":
-            os.remove(os.path.join(avatar_dir, file))
+    if os.path.isdir(avatar_dir):
+        for file in os.listdir(avatar_dir):
+            if file.__str__ != f"{instance.avatar}":
+                os.remove(os.path.join(avatar_dir, file))

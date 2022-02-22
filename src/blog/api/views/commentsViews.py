@@ -1,6 +1,5 @@
 from asyncio.windows_events import NULL
 from rest_framework import generics, status
-from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
@@ -23,7 +22,7 @@ class CreateCommentView(APIView):
             return Response(CommentSerializer(new_comment).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# [GET, DELETE] API comment View 
+# [PUT, DELETE] API comment View 
 class CommentView(APIView):
     serializer_class = CommentSerializer
     

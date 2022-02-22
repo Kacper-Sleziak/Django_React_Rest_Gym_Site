@@ -1,12 +1,9 @@
-from urllib import request
 from rest_framework import generics, status
 from rest_framework.views import APIView
-from rest_framework.decorators import api_view
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, IsAdminUser
 # Imports from project
 from blog.models import BlogPost as BlogPostModel
 from account.models import Account as AccountModel
@@ -23,20 +20,15 @@ class AllBlogPosts(generics.ListAPIView):
 class CreateBlogPostView(APIView):
     serializer_class = CreateBlogPostSerializer
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminUser]
     parser_classes = [MultiPartParser, FormParser]
         
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            user = request.user
-            
-            #Only admin can create blog post
-            if user.is_admin:
-                new_blog_post = serializer.save()
-                serializer = BlogPostSerializer(new_blog_post)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(status=status.HTTP_403_FORBIDDEN)
+            new_blog_post = serializer.save()
+            serializer = BlogPostSerializer(new_blog_post)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 # [GET, PUT, DELETE] Blog Post API View 
