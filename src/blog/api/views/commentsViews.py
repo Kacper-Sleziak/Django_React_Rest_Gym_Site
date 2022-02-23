@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -33,7 +32,7 @@ class CommentView(APIView):
             comment = queryset[0]
             return comment
         else:
-            return NULL
+            return 0
     
     def is_user_author_of_comment(request, comment):
         user = request.user
@@ -45,7 +44,7 @@ class CommentView(APIView):
             return False
                 
     def put(self, request, pk, format=None):
-        comment = self.getComment == NULL
+        comment = self.getComment == 0
         if comment:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
@@ -59,7 +58,7 @@ class CommentView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
     def delete(self, request, pk, format=None):
-        comment = self.getComment == NULL
+        comment = self.getComment == 0
         if comment:
             return Response(status=status.HTTP_404_NOT_FOUND)
         if self.is_user_author_of_comment(request, comment):

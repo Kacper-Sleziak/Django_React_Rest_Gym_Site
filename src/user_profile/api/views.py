@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
@@ -16,13 +15,13 @@ def get_user_with_given_nickname(nickname):
         if queryset.exists():
             return queryset[0]
         else:
-            NULL
+            0
             
 # [GET] Getting information of user profile with informations about account              
 class GetUserProfile(APIView):        
     def get(self, request, nickname):
         user = get_user_with_given_nickname(nickname)
-        if user != NULL:
+        if user != 0:
             account_serializer = AccountSerializer(user)
             feedback_data = account_serializer.data
             user_profile = User_profile.objects.get(account=user)
@@ -50,7 +49,7 @@ class EditUserProfile(APIView):
     
     def put(self, request, nickname):
         user = get_user_with_given_nickname(nickname)
-        if user != NULL:
+        if user != 0:
             user_profile = User_profile.objects.get(account=user)
             serializer = self.serializer_class(user_profile, data=request.data)
             if serializer.is_valid() and self.is_user_owner_of_profile(request, user):

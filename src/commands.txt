@@ -1,0 +1,7 @@
+/* Commands need to build containter */
+
+Django Container:
+
+docker build --tag python-django .
+docker run --publish 8000:8000 python-django
+
