@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
+import {BrowserRouter as Router, Routes, Route, Link, Redirect} from "react-router-dom";
+import HomePage from "./HomePage";
+import Navbar from "./Navbar";
 
-function App() {
-    
+  function App() {
+
     return (
-      <div>
-        <h1>Hello World!</h1>
-      </div>
+      <Router>
+          <Routes>
+              <Route path="/" element={<HomePage />}></Route>
+          </Routes>
+      </Router>
     );
   }
 

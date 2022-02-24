@@ -1,0 +1,188 @@
+*{
+    margin: 0;
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+body {
+    background-image:url(../img/ride.jpg);
+    background-color: #000000d2;;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+.blog_header {
+    display: flex;
+    justify-content: flex-start;
+    height: 400px;
+    width: 100%;
+    color: white;
+    font-size: 80px;
+}
+
+.blog_header span {
+    box-shadow: 34px -27px 0px 0px rgba(43, 158, 74, 0.829);
+    box-sizing: unset;
+    letter-spacing: 5px;
+    margin: 200px 0 0 350px;
+    padding: 10px;
+    box-sizing: unset;
+    background-color: rgba(0, 0, 0, 0.747);    
+}
+
+.articles {
+    margin: auto 0 auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 80px 300px 0 300px;
+    height: 1400px;
+    background-color: rgb(247, 245, 245);
+}
+
+.post_link{
+    margin: 0 20px 40px 20px;
+}
+
+.post {
+    position: relative;
+    color: rgb(71, 71, 71);
+    margin: 40px 0 40px 0;
+}
+
+.img_box {
+    display: flex;
+    box-sizing: border-box;
+}
+
+.post_img {
+    display: inline-block;
+    margin-top: auto;
+    height: 250px;
+    object-fit: scale-down;
+    border: outset 1px black;
+    box-shadow: 34px -27px 0px 0px rgb(43, 158, 74);
+    transition: all 0.5s;
+}
+
+.img_box img:hover {
+    filter: contrast(80%);
+}
+
+.img_box img:hover span{  
+    transform: translate(20px);
+}
+
+.img_box span {
+    box-sizing: unset;
+    padding: 3px;
+    background-color: rgb(47, 187, 84);
+    font-size: 20px;
+    position: absolute;
+    color: rgb(255, 255, 255);
+    transform: translate(15px, 20px);
+}
+
+.read_more {
+    position: absolute;
+    box-sizing: unset;
+    padding: 5px;
+    margin-top: 7px;
+    color: white;
+    margin-left: auto;
+    justify-content: center;
+    width: 90px;
+    display: flex;
+    background-color: rgb(47, 177, 82);
+}
+
+.post h5 {
+    color: gray;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.post h1 {
+    color: black;
+    margin-bottom: 5px;   
+}
+
+.post_short{
+    display: block;
+    width: 370px;
+}
+
+
+@media only screen and (max-width: 1900px){
+    .articles{
+        padding-right: 150px;
+        padding-left: 150px;
+    }
+}
+
+@media only screen and (max-width: 1600px){
+    .articles{
+        padding-right: 50px;
+        padding-left: 50px;
+    }
+}
+
+@media only screen and (max-width: 1360px){
+    .blog_header span{
+        margin-left: 150px;
+    }
+
+    .articles{
+        height: 1900px;
+        padding-right: 150px;
+        padding-left: 150px;
+    }
+}
+
+@media only screen and (max-width: 1150px){
+    .articles{
+        height: 1900px;
+        padding-right: 50px;
+        padding-left: 50px;
+    }
+}
+
+@media only screen and (max-width: 950px){
+    .articles{
+        align-items: center;
+        justify-content: center;
+        height: 4000px;
+    }
+}
+
+@media only screen and (max-width: 700px){
+    .blog_header span{
+        margin-left: 75px;
+    }
+}
+
+@media only screen and (max-width: 600px){
+
+    .articles {
+        height: 3500px;
+    }
+
+    .img_box img {
+        height: 160px;
+    }
+
+    .post h1{
+        font-size: 28px;
+    }
+
+    .post_short {
+        width: 240px;
+        font-size: 13px;
+    }
+}
