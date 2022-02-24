@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'account',
     'blog',
     'user_profile',
+    'frontend',
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -66,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'gym_site.urls'
 
