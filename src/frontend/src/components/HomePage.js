@@ -1,12 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import strength from '../../static/images/strength.png';
-import nutrition from '../../static/images/nutrition.png';
-import waga from '../../static/images/waga.png';
-import weight from '../../static/images/weight.png';
-import treadmill from '../../static/images/treadmill.png';
-import award from '../../static/images/award.png';
 
 const HomePage = () => {
     return(
@@ -45,7 +39,7 @@ const HomePage = () => {
                     
                     <div id="information_main_box">
                         <div class="graphic_info_box">
-                            <img src={strength}/>
+                            <img src="././static/images/strength.png"/>
                             <h1>
                                 Personal Trainer <br/>
                                 Help
@@ -57,7 +51,7 @@ const HomePage = () => {
                         </div>                         
                         
                         <div class="graphic_info_box">
-                            <img src={nutrition}/>
+                            <img src="././static/images/nutrition.png"/>
                             <h1>Creating Nutrition
                                 <br/> Plan
                             </h1>
@@ -68,7 +62,7 @@ const HomePage = () => {
                         </div>
                         
                         <div class="graphic_info_box">
-                            <img src={waga}/>
+                            <img src="././static/images/waga.png"/>
                             <h1>
                                 Checking Body<br/>
                                 Composition
@@ -79,7 +73,7 @@ const HomePage = () => {
                             </span>   
                         </div>
                         <div class="graphic_info_box">
-                            <img src={weight}/>
+                            <img src="././static/images/weight.png"/>
                             <h1>
                                 Group <br/>
                                 Activities
@@ -91,7 +85,7 @@ const HomePage = () => {
                         </div>                         
                         
                         <div class="graphic_info_box">
-                            <img src={treadmill}/>
+                            <img src="././static/images/treadmill.png"/>
                             <h1>Modern
                                 <br/> Equipment
                             </h1>
@@ -102,7 +96,7 @@ const HomePage = () => {
                         </div>
                         
                         <div class="graphic_info_box">
-                            <img src={award}/>
+                            <img src="././static/images/award.png"/>
                             <h1>
                                 Gym Bag<br/>
                                 for Free
