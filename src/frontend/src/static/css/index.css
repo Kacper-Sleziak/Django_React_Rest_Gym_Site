@@ -33,7 +33,7 @@
     width: 100%;
     height: 100%;
 }
-body {
+#home_page{
     background-image:url('../images/bar.jpg');
     background-color: #000000d2;;
     background-repeat: no-repeat;

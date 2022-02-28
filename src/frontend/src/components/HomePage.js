@@ -1,6 +1,14 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import '../static/css/index.css'
+
+import strength from "../static/images/strength.png"
+import nutrition from "../static/images/nutrition.png"
+import waga from "../static/images/waga.png"
+import weight from "../static/images/weight.png"
+import treadmill from "../static/images/treadmill.png"
+import award from "../static/images/award.png"
 
 const HomePage = () => {
     return(
@@ -39,7 +47,7 @@ const HomePage = () => {
                     
                     <div id="information_main_box">
                         <div class="graphic_info_box">
-                            <img src="././static/images/strength.png"/>
+                            <img src={strength}/>
                             <h1>
                                 Personal Trainer <br/>
                                 Help
@@ -51,7 +59,7 @@ const HomePage = () => {
                         </div>                         
                         
                         <div class="graphic_info_box">
-                            <img src="././static/images/nutrition.png"/>
+                            <img src={nutrition}/>
                             <h1>Creating Nutrition
                                 <br/> Plan
                             </h1>
@@ -62,7 +70,7 @@ const HomePage = () => {
                         </div>
                         
                         <div class="graphic_info_box">
-                            <img src="././static/images/waga.png"/>
+                            <img src={waga}/>
                             <h1>
                                 Checking Body<br/>
                                 Composition
@@ -73,19 +81,19 @@ const HomePage = () => {
                             </span>   
                         </div>
                         <div class="graphic_info_box">
-                            <img src="././static/images/weight.png"/>
+                            <img src={weight}/>
                             <h1>
                                 Group <br/>
                                 Activities
                             </h1>
                             <span>
                                 Lorem ipsum dolor sit amet consectetur <br/>
-                                adipisicing elit. Quos sunt sint fugit
+                                adipisicing elit. Quos sunt sint fugitasdas
                             </span>   
                         </div>                         
                         
                         <div class="graphic_info_box">
-                            <img src="././static/images/treadmill.png"/>
+                            <img src={treadmill}/>
                             <h1>Modern
                                 <br/> Equipment
                             </h1>
@@ -96,7 +104,7 @@ const HomePage = () => {
                         </div>
                         
                         <div class="graphic_info_box">
-                            <img src="././static/images/award.png"/>
+                            <img src={award}/>
                             <h1>
                                 Gym Bag<br/>
                                 for Free

@@ -1,12 +1,18 @@
 import React from "react";
+import '../static/css/navbar.css'
+import logo from "../static/images/logo.png"
+import fb from "../static/images/fb.png"
+import ig from "../static/images/ig.png"
+import tw from "../static/images/tw.png"
 
 const Navbar = () => {
+    
     return(
         <nav>
             <div id="navbar">
                 <a className="logo_link" href="index.html">
                     <div className="logo__navbar">
-                        <img src="././static/images/logo.png" alt="Logo"/>
+                        <img src={logo} alt="Logo"/>
 
                         <span>
                             <p className="logo__navbar__text">TRAINING</p>
@@ -46,12 +52,13 @@ const Navbar = () => {
                         <a className="link" id="classes" href="classes.html">Classes</a>
                         <a className="link" id="contact" href="#contact_scroll">Contact</a>
                         <a className="link" id="blog" href="blog.html">Blog</a>
+                        <a className="link" id="login" href="blog.html">Login</a>
                     </div>
 
                     <div className = "navbar__icons">
-                        <a id ="fb" href=""><img src ="././static/images/fb.png" alt="Facebook link"/></a>
-                        <a id ="ig" href=""><img src ="././static/images/ig.png" alt="Instagram link"/></a>
-                        <a id ="tw" href=""><img src ="././static/images/tw.png" alt="Twitter link"/></a>
+                        <a id ="fb" href=""><img src ={fb} alt="Facebook link"/></a>
+                        <a id ="ig" href=""><img src ={ig} alt="Instagram link"/></a>
+                        <a id ="tw" href=""><img src ={tw} alt="Twitter link"/></a>
                     </div>        
                 </div>       
             </div>

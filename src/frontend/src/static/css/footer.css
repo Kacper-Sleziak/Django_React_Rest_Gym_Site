@@ -5,7 +5,7 @@ footer {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    background-image: url(../img/gym.jpg);
+    background-image: url(../images/gym.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
