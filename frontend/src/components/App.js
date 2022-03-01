@@ -15,11 +15,14 @@ import Login from "./Login"
     const [nickname, setNickname] = useState("None")
     const [email, setEmail] = useState("None")
     const [token, setToken] = useState("None")
-
+    console.log(nickname)
     return (
       <Router>
           <Routes>
-              <Route path="/" element={<HomePage />}></Route>
+              <Route path="/" element={
+              <HomePage 
+              userNickname={nickname} userEmail={email} userToken={token}/>}
+              />
               <Route path="/blog" element={<Blog />}></Route>
               <Route path="/login" element={<Login />}></Route>
           </Routes>

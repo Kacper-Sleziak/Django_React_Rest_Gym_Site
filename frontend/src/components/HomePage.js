@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect, useState} from 'react';
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import '../static/css/index.css'
@@ -10,10 +11,17 @@ import weight from "../static/images/weight.png"
 import treadmill from "../static/images/treadmill.png"
 import award from "../static/images/award.png"
 
-const HomePage = () => {
+const HomePage = ({userNickname, userEmail, userToken}) => {
+
+    const [nickname, setNickname] = useState(userNickname)
+    const [email, setEmail] = useState(userEmail)
+    const [token, setToken] = useState(userToken)
+
+    console.log(nickname)
+     
     return(
         <div id="home_page">
-                <Navbar/>
+                <Navbar userNickname={nickname}/>
                 <header>
                     <div class="header__text">         
                         <span class="main__text">

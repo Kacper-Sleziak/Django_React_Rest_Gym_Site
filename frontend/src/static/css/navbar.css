@@ -108,6 +108,32 @@
     height: 39px;
 }
 
+#login__box{
+    color:white;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+    font-size: 18px;
+    margin-right: 170px;
+}
+
+#login__box span {
+    margin-top: auto;
+
+}
+
+#login__click{
+    display: flex;
+    margin-bottom: 6px;
+    cursor:pointer;
+}
+
+#login__click:hover{
+    text-decoration: underline 2px rgba(255, 255, 255, 0.849);
+    transition: 0.5s;
+}
+
 .navbar__icons {
     display: flex;
     align-items: center;
@@ -124,6 +150,12 @@
     border-radius: 30%;
     margin: 0 5px 0 5px;
     margin-left: 20px;
+    transition: 0.5s;
+}
+
+#logout:hover {
+    cursor: pointer;
+    text-decoration: underline 2px rgba(255, 255, 255, 0.849);
     transition: 0.5s;
 }
 

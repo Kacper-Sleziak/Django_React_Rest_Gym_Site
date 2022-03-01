@@ -1,11 +1,43 @@
 import React from "react";
+import { useEffect, useState} from 'react';
+
 import '../static/css/navbar.css'
 import logo from "../static/images/logo.png"
 import fb from "../static/images/fb.png"
 import ig from "../static/images/ig.png"
 import tw from "../static/images/tw.png"
+import PersonIcon from '@mui/icons-material/Person';
 
-const Navbar = () => {
+const Navbar = ({userNickname}) => {
+    
+    const [nickname, setNickname] = useState(userNickname)
+
+    const renderLogin = () => {
+
+        console.log(nickname)
+
+        if (nickname === "None"){
+            return(
+                <a className="link" id="login" href="blog.html">Login</a>
+            );
+        }
+    }
+
+    const renderLoginBox = () => {
+        if (nickname != "None"){  
+            return(
+                <div id="login__box">
+                    <a>
+                        <div id="login__click">
+                            <PersonIcon />
+                            <span>{nickname}</span>
+                        </div>
+                    </a>
+                    <span id="logout">Logout</span>
+                </div>  
+            );
+        }
+    }
     
     return(
         <nav>
@@ -52,14 +84,16 @@ const Navbar = () => {
                         <a className="link" id="classes" href="classes.html">Classes</a>
                         <a className="link" id="contact" href="#contact_scroll">Contact</a>
                         <a className="link" id="blog" href="blog.html">Blog</a>
-                        <a className="link" id="login" href="blog.html">Login</a>
+                        {renderLogin()}
                     </div>
 
                     <div className = "navbar__icons">
                         <a id ="fb" href=""><img src ={fb} alt="Facebook link"/></a>
                         <a id ="ig" href=""><img src ={ig} alt="Instagram link"/></a>
                         <a id ="tw" href=""><img src ={tw} alt="Twitter link"/></a>
-                    </div>        
+                    </div> 
+
+                    {renderLoginBox()}
                 </div>       
             </div>
 
