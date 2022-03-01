@@ -3,9 +3,9 @@ import '../static/css/footer.css'
 const Footer = () => {
     return(
         <footer>
-            <div class="footer_section" id="contact_scroll">
-                    <div class="left_footer">
-                        <div class="conntact">
+            <div className="footer_section" id="contact_scroll">
+                    <div className="left_footer">
+                        <div className="conntact">
                             <h1>Conntact</h1>
                             <br/>
                             Street: Street 21/5<br/>
@@ -14,7 +14,7 @@ const Footer = () => {
                             Phone Number: 123-456-789
                         </div>
 
-                        <div class="menu">
+                        <div className="menu">
                             <h1>Menu</h1>                            
                             <br/>
                             <a href="#navbar">Top of website</a> <br/>
@@ -24,7 +24,7 @@ const Footer = () => {
                         </div>
                     </div>
                     
-                    <div class="newsletter">
+                    <div className="newsletter">
                         <h1>Newsletter</h1>
                         
                         <br/>
@@ -36,8 +36,8 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div class="footer_2">
-                    <div class="author">
+                <div className="footer_2">
+                    <div className="author">
                         <span>@2021 Website written by Kacper Śleziak</span>                   
                     </div>
                 </div>

@@ -11,18 +11,15 @@ import PersonIcon from '@mui/icons-material/Person';
 const Navbar = ({userNickname}) => {
     
     const [nickname, setNickname] = useState(userNickname)
-
+    
     const renderLogin = () => {
-
-        console.log(nickname)
-
         if (nickname === "None"){
             return(
                 <a className="link" id="login" href="blog.html">Login</a>
             );
         }
     }
-
+    
     const renderLoginBox = () => {
         if (nickname != "None"){  
             return(

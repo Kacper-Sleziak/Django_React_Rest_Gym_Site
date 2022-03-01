@@ -15,7 +15,7 @@ import Login from "./Login"
     const [nickname, setNickname] = useState("None")
     const [email, setEmail] = useState("None")
     const [token, setToken] = useState("None")
-    console.log(nickname)
+
     return (
       <Router>
           <Routes>
@@ -24,7 +24,10 @@ import Login from "./Login"
               userNickname={nickname} userEmail={email} userToken={token}/>}
               />
               <Route path="/blog" element={<Blog />}></Route>
-              <Route path="/login" element={<Login />}></Route>
+              <Route path="/login" element={
+              <Login 
+              userNickname={nickname} userEmail={email} userToken={token}/>}
+              />
           </Routes>
       </Router>
     );

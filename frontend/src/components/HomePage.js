@@ -1,8 +1,8 @@
 import React from "react";
 import { useEffect, useState} from 'react';
+import '../static/css/index.css'
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import '../static/css/index.css'
 
 import strength from "../static/images/strength.png"
 import nutrition from "../static/images/nutrition.png"
@@ -23,19 +23,19 @@ const HomePage = ({userNickname, userEmail, userToken}) => {
         <div id="home_page">
                 <Navbar userNickname={nickname}/>
                 <header>
-                    <div class="header__text">         
-                        <span class="main__text">
+                    <div className="header__text">         
+                        <span className="main__text">
                             FITNESS IS NOT<br/>
                         </span>
                         
-                        <span class="near__main__text">
+                        <span className="near__main__text">
                             ABOUT BEING BETTER<br/>
                             THAN SOMEONE ELSE...IT'S ABOUT<br/>
                             BEING BETTER THAN YOU USED TO BE
                         </span>
                     </div>
                     
-                    <div class="header__join__us">
+                    <div className="header__join__us">
                         <br/>
                         <button>
                             JOIN US
@@ -45,8 +45,8 @@ const HomePage = ({userNickname, userEmail, userToken}) => {
 
             
             <main>
-                <div class="information_section">
-                    <div class="header_box">
+                <div className="information_section">
+                    <div className="header_box">
                         <span>
                             What We Can <br/>
                             Offer?
@@ -54,7 +54,7 @@ const HomePage = ({userNickname, userEmail, userToken}) => {
                     </div>
                     
                     <div id="information_main_box">
-                        <div class="graphic_info_box">
+                        <div className="graphic_info_box">
                             <img src={strength}/>
                             <h1>
                                 Personal Trainer <br/>
@@ -66,7 +66,7 @@ const HomePage = ({userNickname, userEmail, userToken}) => {
                             </span>   
                         </div>                         
                         
-                        <div class="graphic_info_box">
+                        <div className="graphic_info_box">
                             <img src={nutrition}/>
                             <h1>Creating Nutrition
                                 <br/> Plan
@@ -77,7 +77,7 @@ const HomePage = ({userNickname, userEmail, userToken}) => {
                             </span>   
                         </div>
                         
-                        <div class="graphic_info_box">
+                        <div className="graphic_info_box">
                             <img src={waga}/>
                             <h1>
                                 Checking Body<br/>
@@ -88,7 +88,7 @@ const HomePage = ({userNickname, userEmail, userToken}) => {
                                 adipisicing elit. Quos sunt sint fugit
                             </span>   
                         </div>
-                        <div class="graphic_info_box">
+                        <div className="graphic_info_box">
                             <img src={weight}/>
                             <h1>
                                 Group <br/>
@@ -100,7 +100,7 @@ const HomePage = ({userNickname, userEmail, userToken}) => {
                             </span>   
                         </div>                         
                         
-                        <div class="graphic_info_box">
+                        <div className="graphic_info_box">
                             <img src={treadmill}/>
                             <h1>Modern
                                 <br/> Equipment
@@ -111,7 +111,7 @@ const HomePage = ({userNickname, userEmail, userToken}) => {
                             </span>   
                         </div>
                         
-                        <div class="graphic_info_box">
+                        <div className="graphic_info_box">
                             <img src={award}/>
                             <h1>
                                 Gym Bag<br/>
