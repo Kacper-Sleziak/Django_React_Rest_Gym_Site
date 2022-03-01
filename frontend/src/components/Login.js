@@ -7,12 +7,13 @@ import InputLabel from '@mui/material/InputLabel';
 import FilledInput from '@mui/material/FilledInput';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import logo from "../static/images/logo.png"
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 
 const Login = ({userNickname, userEmail, userToken}) => {
-
+    
     //  User information states 
     const [nickname, setNickname] = useState(userNickname)
     const [email, setEmail] = useState(userEmail)
@@ -27,10 +28,6 @@ const Login = ({userNickname, userEmail, userToken}) => {
         setNickname(nickname)
         setEmail(email)
         setToken(token)
-
-        console.log(email)
-        console.log(nickname)
-        console.log(token)
     }
 
     // Making fetch to end point 
@@ -56,23 +53,31 @@ const Login = ({userNickname, userEmail, userToken}) => {
 
     if (nickname === "None"){
         return(
-            <div className = "login">
-                <div id="login__fields">
-                    <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                        <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                        <TextField 
-                        id="email" size="large" label="Email" variant="standard"
-                        onChange={(e)=> setUsername(e.target.value)}/>
-                    </Box>
+            <div className = "login__bg">
+                <div id="login__box">
+                    <div id="login__header">
+                        <h1>Training World</h1>
+                        <h2>Login Panel</h2>
+                        <img src={logo}/>
+                    </div>
 
-                    <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                        <VisibilityIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                        <TextField id="password" size="large" label="Password" variant="standard"
-                        onChange={(e)=> setPassword(e.target.value)}
-                        />
-                    </Box>
+                    <div id="login__fields">
+                        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                            <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                            <TextField 
+                            id="email" size="large" label="Email" variant="standard"
+                            onChange={(e)=> setUsername(e.target.value)}/>
+                        </Box>
 
-                    <Button id="login__button"size="large" onClick={handleLoginButton}>Login</Button>
+                        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                            <VisibilityIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                            <TextField id="password" size="large" label="Password" variant="standard"
+                            onChange={(e)=> setPassword(e.target.value)}
+                            />
+                        </Box>
+
+                        <Button id="login__button"size="large" onClick={handleLoginButton}>Login</Button>
+                    </div>
                 </div>
             </div>
         );
