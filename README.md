@@ -5,5 +5,5 @@ Site include:
 - login and register system
 - data validation
 - token authorization
-- blog with with the possibility of writing posts with photos for logged in users
+- blog with the possibility of writing posts with photos for logged in users
 - REST communication for every operation
