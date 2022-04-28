@@ -1,7 +1,7 @@
 # Django_React_Rest_Gym_Site
 Gym Site build with django backend and react frontend
 
-Site include:
+Site includes:
 - login and register system
 - data validation
 - token authorization
