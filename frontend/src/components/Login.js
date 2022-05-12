@@ -12,44 +12,12 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 
-const Login = ({userNickname, userEmail, userToken}) => {
+const Login = ({nickname, onLogin}) => {
     
-    //  User information states 
-    const [nickname, setNickname] = useState(userNickname)
-    const [email, setEmail] = useState(userEmail)
-    const [token, setToken] = useState(userToken)
-    
+
     //  Login fields states
-    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    
-    // Setting User data states after fetch
-    const setUserData = (nickname, email, token) =>{
-        setNickname(nickname)
-        setEmail(email)
-        setToken(token)
-    }
-
-    // Making fetch to end point 
-    const handleLoginButton = () =>{
-
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                email: username,
-                password: password 
-            })
-        }
-
-        fetch('http://127.0.0.1:8000/api/account/login', requestOptions)
-        .then(response => response.json())
-        .then(data => setUserData(
-             data["nickname"],
-             data["email"],
-             data["token"]
-        ))
-    }
 
     if (nickname === "None"){
         return(
@@ -66,7 +34,7 @@ const Login = ({userNickname, userEmail, userToken}) => {
                             <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                             <TextField 
                             id="email" size="large" label="Email" variant="standard"
-                            onChange={(e)=> setUsername(e.target.value)}/>
+                            onChange={(e)=> setEmail(e.target.value)}/>
                         </Box>
 
                         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
@@ -76,7 +44,10 @@ const Login = ({userNickname, userEmail, userToken}) => {
                             />
                         </Box>
 
-                        <Button id="login__button"size="large" onClick={handleLoginButton}>Login</Button>
+                        <Button id="login__button"size="large" 
+                            onClick={() => onLogin(email, password)}>
+                            Login
+                        </Button>
                     </div>
                 </div>
             </div>
@@ -87,7 +58,6 @@ const Login = ({userNickname, userEmail, userToken}) => {
         return(
             <div className = "login">
                 <h1>User is arleady logged in!</h1>
-
             </div>
         );
     }
