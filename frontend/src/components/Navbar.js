@@ -77,18 +77,26 @@ const Navbar = ({userNickname}) => {
 
                 <div className ="links__box">
                     <div className="links">
-                        <a className="link" id="about_us" href="about_us.html">About us</a>
-                        <a className="link" id="classes" href="classes.html">Classes</a>
-                        <a className="link" id="contact" href="#contact_scroll">Contact</a>
-                        <a className="link" id="blog" href="blog.html">Blog</a>
-                        {renderLogin()}
+                        <div className="menu_item">
+                            <a className="link" href="about_us.html">About us</a>
+                        </div>
+                        
+                        <div className="menu_item">
+                            <a className="link" href="classes.html">Classes</a>
+                        </div>
+                        
+                        <div className="menu_item">
+                            <a className="link" href="#contact_scroll">Contact</a>
+                        </div>
+                        
+                        <div className="menu_item">
+                            <a className="link" href="blog.html">Blog</a>
+                        </div>
+                        <div className="menu_item">
+                            {renderLogin()}
+                        </div>
                     </div>
 
-                    <div className = "navbar__icons">
-                        <a id ="fb" href=""><img src ={fb} alt="Facebook link"/></a>
-                        <a id ="ig" href=""><img src ={ig} alt="Instagram link"/></a>
-                        <a id ="tw" href=""><img src ={tw} alt="Twitter link"/></a>
-                    </div> 
 
                     {renderLoginBox()}
                 </div>       
