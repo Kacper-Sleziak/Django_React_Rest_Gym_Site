@@ -1,4 +1,4 @@
-# Django_React_Rest_Gym_Site
+## Django_React_Rest_Gym_Site
 Gym Site build with django backend and react frontend
 
 Site includes:
