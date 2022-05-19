@@ -8,18 +8,16 @@ services:
     ports:
       - 8000:8000
     depends_on:
-      - database
-    container_name: django_backend
+      - db
+    env_file:
+      - backend/.env
   
-  database:
-    image: postgres
+  db:
+    image: postgres:14.3-alpine
     volumes:
       - ./data/db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    container_name: postgres_db
+    env_file:
+      - backend/.env
   
   frontend: 
     build:
