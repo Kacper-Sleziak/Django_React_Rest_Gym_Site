@@ -1,7 +1,7 @@
 from django.db.models.signals import pre_save, pre_delete, post_save
 from django.utils.text import slugify
 from django.dispatch import receiver
-from gym_site.settings import BASE_DIR
+from core.settings import BASE_DIR
 import os
 from blog.models import BlogPost, BlogLike, CommentLike
 

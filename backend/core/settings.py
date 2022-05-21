@@ -75,7 +75,7 @@ CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000'
 ]
 
-ROOT_URLCONF = 'gym_site.urls'
+ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
     {
@@ -93,7 +93,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'gym_site.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 #Account Model
 AUTH_USER_MODEL = 'account.Account'
@@ -110,6 +110,13 @@ DATABASES = {
         'HOST': 'db',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'mydatabase',
+#     }
+# }
 
 
 # Password validation
@@ -150,6 +157,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn')
 
 # Default primary key field type

@@ -1,7 +1,7 @@
 from django.dispatch import receiver
 from django.db.models.signals import pre_delete, pre_save
 from user_profile. models import User_profile
-from gym_site.settings import BASE_DIR
+from core.settings import BASE_DIR
 import os
 
 # Delete avatar while deleting profile

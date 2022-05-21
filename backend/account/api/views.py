@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 # Imports from project
 from account.models import Account as AccountModel
-from account.api.serializers import (AccountSerializer, CreateAccountSerializer, LoginSerializer, 
-                                     UpdateAccountSerializer)
+from account.api.serializers import (AccountSerializer, LoginSerializer, 
+                                     )
 # [POST] Login API View
 class Login(APIView):
     serializer_class = LoginSerializer
@@ -35,51 +35,51 @@ class AccountView(generics.ListAPIView):
     queryset = AccountModel.objects.all()
     serializer_class = AccountSerializer
     
-# [PUT, DELETE] Account View
-class Account(APIView):
-    serializer_class = UpdateAccountSerializer
+# # [PUT, DELETE] Account View
+# class Account(APIView):
+#     serializer_class = UpdateAccountSerializer
 
-    # Checking if in database is account with give pk
-    def is_account_with_given_id(self, pk):
+#     # Checking if in database is account with give pk
+#     def is_account_with_given_id(self, pk):
         
-        queryset = AccountModel.objects.filter(id=pk)
+#         queryset = AccountModel.objects.filter(id=pk)
         
-        if queryset.exists():
-            return True
-        else:
-            return False
+#         if queryset.exists():
+#             return True
+#         else:
+#             return False
         
-    # Put Request to update account object
-    def put(self, request, pk, format=None):
+#     # Put Request to update account object
+#     def put(self, request, pk, format=None):
         
-        if not self.is_account_with_given_id(pk):
-            return Response(status=status.HTTP_204_NO_CONTENT)
+#         if not self.is_account_with_given_id(pk):
+#             return Response(status=status.HTTP_204_NO_CONTENT)
             
-        account = AccountModel.objects.get(id=pk)   
-        serializer = self.serializer_class(account, data=request.data)        
+#         account = AccountModel.objects.get(id=pk)   
+#         serializer = self.serializer_class(account, data=request.data)        
         
-        if serializer.is_valid():
-            serializer.save()
+#         if serializer.is_valid():
+#             serializer.save()
         
-            return Response(AccountSerializer(account).data)
+#             return Response(AccountSerializer(account).data)
 
-        return Response (serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         return Response (serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    # Delete request to delete accout object 
-    def delete(self, request, pk, format=None):
+#     # Delete request to delete accout object 
+#     def delete(self, request, pk, format=None):
         
-        if not self.is_account_with_given_id(pk):
-            return Response(status=status.HTTP_404_NOT_FOUND)
+#         if not self.is_account_with_given_id(pk):
+#             return Response(status=status.HTTP_404_NOT_FOUND)
         
-        account = AccountModel.objects.get(id=pk)  
-        account.delete()
-        account.save()
+#         account = AccountModel.objects.get(id=pk)  
+#         account.delete()
+#         account.save()
         
-        return Response(status=status.HTTP_200_OK)
+#         return Response(status=status.HTTP_200_OK)
         
 # [POST] View Creating Account by post request
 class CreateAccountView(APIView):
-    serializer_class = CreateAccountSerializer
+    serializer_class = AccountSerializer
     
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
