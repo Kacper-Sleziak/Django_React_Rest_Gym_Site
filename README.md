@@ -11,6 +11,7 @@ Gym Site built with django backend and react frontend. Website is still in progr
 - MUI
 - CSS
 - HTML
+- Docker
 
 ## Main view
 ![index](https://user-images.githubusercontent.com/57037642/169275783-1c7d4f2e-f6f7-4dd8-833b-3dd50888d693.PNG)
