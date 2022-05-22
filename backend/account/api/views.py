@@ -25,6 +25,8 @@ def is_account_with_given_id(self, pk):
 
 
 # [POST] Login API View
+# End point needs password and user's emai
+
 class Login(APIView):
     serializer_class = LoginSerializer
 

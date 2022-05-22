@@ -1,5 +1,3 @@
-from asyncore import read
-from importlib.metadata import requires
 from rest_framework import serializers
 from django.core.validators import EmailValidator
 from account.models import Account
@@ -14,6 +12,7 @@ class LoginSerializer(serializers.ModelSerializer):
             'email': {'validators': [EmailValidator, ]},
         }
 
+# Serializer for most account's operations 
 
 class AccountSerializer(serializers.ModelSerializer):
     id = serializers.CharField(read_only=True)
@@ -72,6 +71,7 @@ class PasswordChangeSerializer(serializers.Serializer):
     password = serializers.CharField(required=True)
     password2 = serializers.CharField(required=True)
 
+    # Validate check if old_password == password 
     def validate(self, data):
         if not self.context['request'].user.check_password(
                 data.get('old_password')):
@@ -98,24 +98,13 @@ class AccountChangeDataSerializer(serializers.Serializer):
     first_name = serializers.CharField(required=False)
     last_name = serializers.CharField(required=False)
 
+    # Validate check if in data base exsists user with given nickname
     def validate(self, data):
         if data.get('nickname'):
             nickname = data.get('nickname')
             if Account.objects.filter(nickname=nickname).exists():
                 raise serializers.ValidationError(
                     {'nickname': f'There is a user with nickname {nickname}.'})
-
-        if data.get('last_name'):
-            last_name = data.get('last_name')
-            if Account.objects.filter(last_name=last_name).exists():
-                raise serializers.ValidationError(
-                    {'last_name': f'There is a user with last name {last_name}.'})
-
-        if data.get('first_name'):
-            first_name = data.get('first_name')
-            if Account.objects.filter(first_name=first_name).exists():
-                raise serializers.ValidationError(
-                    {'last_name': f'There is a user with last name {first_name}.'})
 
     def update(self, instance, validated_data):
         print(validated_data)
