@@ -14,7 +14,7 @@ const HomePage = () => {
     return(
         <div>
             <div id="main_bg">
-                <Navbar userNickname={"None"}/>
+                <Navbar userNickname={"Kacper"}/>
                 <header>
                     <div className="header__text">         
                         <span className="main__text">

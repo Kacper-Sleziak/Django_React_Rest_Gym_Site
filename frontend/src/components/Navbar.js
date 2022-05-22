@@ -3,9 +3,6 @@ import { useEffect, useState} from 'react';
 
 import '../static/css/navbar.css'
 import logo from "../static/images/logo.png"
-import fb from "../static/images/fb.png"
-import ig from "../static/images/ig.png"
-import tw from "../static/images/tw.png"
 import PersonIcon from '@mui/icons-material/Person';
 
 const Navbar = ({userNickname}) => {
@@ -30,7 +27,6 @@ const Navbar = ({userNickname}) => {
                             <span>{nickname}</span>
                         </div>
                     </a>
-                    <span id="logout">Logout</span>
                 </div>  
             );
         }
@@ -94,11 +90,9 @@ const Navbar = ({userNickname}) => {
                         </div>
                         <div className="menu_item">
                             {renderLogin()}
+                            {renderLoginBox()}
                         </div>
                     </div>
-
-
-                    {renderLoginBox()}
                 </div>       
             </div>
 
