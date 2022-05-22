@@ -4,7 +4,9 @@ from account.models import Account
 from user_profile.models import User_profile
 from rest_framework.authtoken.models import Token
 
-# Create profile for new user 
+# Create profile for new user
+
+
 @receiver(post_save, sender=Account)
 def create_profile_for_user(sender, instance, created=False, *args, **kwargs):
     if created:
@@ -12,9 +14,9 @@ def create_profile_for_user(sender, instance, created=False, *args, **kwargs):
         new_user_profile.save()
 
 # Create token for new user
+
+
 @receiver(post_save, sender=Account)
 def create_profile_for_user(sender, instance, created=False, *args, **kwargs):
     if created:
         Token.objects.create(user=instance)
-    
-    
