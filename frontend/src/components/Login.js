@@ -12,12 +12,41 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 
-const Login = ({nickname, onLogin}) => {
+const Login = () => {
     
 
     //  Login fields states
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("None")
+    const [nickname, setNickname] = useState("None")
+    const [token, setToken] = useState("None")
+
+    const setUserData = (nickname, email, token) =>{
+      setNickname(nickname)
+      setEmail(email)
+      setToken(token)
+    }
+
+    const login = (username, password) => { 
+      console.log(username)
+      console.log(password)
+
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            email: username,
+            password: password 
+        })
+      }
+
+      fetch('http://127.0.0.1:8000/account/login', requestOptions)
+      .then(response => response.json())
+      .then(data => setUserData(
+        data["nickname"],
+        data["email"],
+        data["token"]
+      ))
+    }
 
     if (nickname === "None"){
         return(
@@ -45,7 +74,7 @@ const Login = ({nickname, onLogin}) => {
                         </Box>
 
                         <Button id="login__button"size="large" 
-                            onClick={() => onLogin(email, password)}>
+                            onClick={() => login(email, password)}>
                             Login
                         </Button>
                     </div>

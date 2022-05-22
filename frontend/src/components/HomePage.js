@@ -3,19 +3,18 @@ import { useEffect, useState} from 'react';
 import '../static/css/index.css'
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import { red } from "@mui/material/colors";
 
-const HomePage = ({userNickname, userEmail, userToken}) => {
+const HomePage = () => {
 
-    const [nickname, setNickname] = useState(userNickname)
-    const [email, setEmail] = useState(userEmail)
-    const [token, setToken] = useState(userToken)
-
-    console.log(nickname)
      
     return(
         <div>
             <div id="main_bg">
-                <Navbar userNickname={nickname}/>
+                <Navbar userNickname={"None"}/>
                 <header>
                     <div className="header__text">         
                         <span className="main__text">
@@ -36,6 +35,31 @@ const HomePage = ({userNickname, userEmail, userToken}) => {
                         </button>
                     </div>       
                 </header>
+            </div>
+
+            <div id="media">
+                <div id="icons">
+                    <div class="icon" id="fb">
+                        <FacebookIcon
+                        fontSize="medium"
+                        />
+                    </div>
+
+                    <div class="icon">
+                        <InstagramIcon
+                        fontSize="medium"
+                        />
+                    </div>
+
+                    <div class="icon">
+                        <TwitterIcon
+                        fontSize="medium"
+                        />
+                    </div>
+                </div>
+                <div id="media_text">
+                    <span>Follow us</span>
+                </div>
             </div>
             
             <main>
