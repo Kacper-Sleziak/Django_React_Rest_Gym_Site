@@ -1,11 +1,25 @@
+from urllib import response
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
 # Imports from project
 from account.models import Account as AccountModel
-from account.api.serializers import (AccountSerializer, LoginSerializer, 
-                                     )
+from account.api.serializers import (AccountSerializer, LoginSerializer, PasswordChangeSerializer,
+                                     AccountChangeDataSerializer)
+
+
+def is_account_with_given_id(self, pk):
+    
+    queryset = AccountModel.objects.filter(id=pk)
+    
+    if queryset.exists():
+        return True
+    else:
+        return False
+    
+    
 # [POST] Login API View
 class Login(APIView):
     serializer_class = LoginSerializer
@@ -30,54 +44,28 @@ class Login(APIView):
             return Response({'error': "Email or password is not correct!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-# [GET] Get all accounts .
-class AccountView(generics.ListAPIView):
-    queryset = AccountModel.objects.all()
+# [DELETE, GET] Account View
+class AccountView(APIView):
     serializer_class = AccountSerializer
     
-# # [PUT, DELETE] Account View
-# class Account(APIView):
-#     serializer_class = UpdateAccountSerializer
+    def get(self, request, pk, format=None):
+        if self.is_account_with_given_id(pk):
+            return Response(self.serializer_class(request.data), status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-#     # Checking if in database is account with give pk
-#     def is_account_with_given_id(self, pk):
+    def delete(self, request, pk, format=None):
         
-#         queryset = AccountModel.objects.filter(id=pk)
+        if not is_account_with_given_id(pk):
+            return Response(status=status.HTTP_404_NOT_FOUND)
         
-#         if queryset.exists():
-#             return True
-#         else:
-#             return False
+        account = AccountModel.objects.get(id=pk)  
+        account.delete()
+        account.save()
         
-#     # Put Request to update account object
-#     def put(self, request, pk, format=None):
-        
-#         if not self.is_account_with_given_id(pk):
-#             return Response(status=status.HTTP_204_NO_CONTENT)
-            
-#         account = AccountModel.objects.get(id=pk)   
-#         serializer = self.serializer_class(account, data=request.data)        
-        
-#         if serializer.is_valid():
-#             serializer.save()
-        
-#             return Response(AccountSerializer(account).data)
-
-#         return Response (serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-#     # Delete request to delete accout object 
-#     def delete(self, request, pk, format=None):
-        
-#         if not self.is_account_with_given_id(pk):
-#             return Response(status=status.HTTP_404_NOT_FOUND)
-        
-#         account = AccountModel.objects.get(id=pk)  
-#         account.delete()
-#         account.save()
-        
-#         return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_200_OK)
         
 # [POST] View Creating Account by post request
+# End Point needs nickname, email, password and password2
 class CreateAccountView(APIView):
     serializer_class = AccountSerializer
     
@@ -94,5 +82,25 @@ class CreateAccountView(APIView):
             return Response(feedback_data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# [PUT] View Change password of account
+# End Point need old_password, password, and password2
+class ChangePasswordView(generics.UpdateAPIView):
+    serializer_class = PasswordChangeSerializer
+    model = AccountModel
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+# [PUT] View Change data of account
+# Data includes nickname, first_name, last_name, 
+# None of fields in required
+class ChangeAccountData(generics.UpdateAPIView):
+    serializer_class = AccountChangeDataSerializer
+    model = AccountModel
+    permission_classes = (IsAuthenticated,)
+    
+    def get_object(self, queryset=None):
+        return self.request.user
 
         
