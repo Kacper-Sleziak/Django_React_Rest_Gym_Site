@@ -13,7 +13,6 @@ from blog.api.pagination import CommentsPagination
 
 class CreateCommentView(APIView):
     serializer_class = CreateCommentSerializer
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):

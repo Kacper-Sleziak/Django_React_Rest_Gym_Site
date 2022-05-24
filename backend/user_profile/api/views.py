@@ -39,7 +39,6 @@ class GetUserProfile(APIView):
 
 class EditUserProfile(APIView):
     serializer_class = UserProfileSerializer
-    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
 

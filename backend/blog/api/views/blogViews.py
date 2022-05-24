@@ -23,8 +23,7 @@ class AllBlogPosts(generics.ListAPIView):
 
 class CreateBlogPostView(APIView):
     serializer_class = CreateBlogPostSerializer
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAdminUser]
     parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request, format=None):

@@ -27,29 +27,29 @@ def is_account_with_given_id(self, pk):
 # [POST] Login API View
 # End point needs password and user's emai
 
-class Login(APIView):
-    serializer_class = LoginSerializer
+# class Login(APIView):
+#     serializer_class = LoginSerializer
 
-    def post(self, request, format=None):
-        serializer = self.serializer_class(data=request.data,)
+#     def post(self, request, format=None):
+#         serializer = self.serializer_class(data=request.data,)
 
-        if serializer.is_valid():
-            email = serializer.validated_data['email']
-            password = serializer.validated_data['password']
+#         if serializer.is_valid():
+#             email = serializer.validated_data['email']
+#             password = serializer.validated_data['password']
 
-            queryset = AccountModel.objects.all().filter(email=email)
-            if queryset.exists():
-                user = queryset[0]
-                if user.check_password(password):
-                    token = Token.objects.get(user=user)
-                    return Response({
-                        'token': token.key,
-                        'email': user.email,
-                        'nickname': user.nickname
-                    }, status=status.HTTP_200_OK)
-            return Response({'error': "Email or password is not correct!"},
-                            status=status.HTTP_400_BAD_REQUEST)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#             queryset = AccountModel.objects.all().filter(email=email)
+#             if queryset.exists():
+#                 user = queryset[0]
+#                 if user.check_password(password):
+#                     token = Token.objects.get(user=user)
+#                     return Response({
+#                         'token': token.key,
+#                         'email': user.email,
+#                         'nickname': user.nickname
+#                     }, status=status.HTTP_200_OK)
+#             return Response({'error': "Email or password is not correct!"},
+#                             status=status.HTTP_400_BAD_REQUEST)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # [DELETE, GET] Account View
 
