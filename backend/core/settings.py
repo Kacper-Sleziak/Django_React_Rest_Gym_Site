@@ -16,17 +16,15 @@ import environ
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(BASE_DIR)
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+env = environ.Env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-env = environ.Env()
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-
 SECRET_KEY = env('SECRET_KEY')
-DEBUG = env('DEBUG')
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -34,11 +32,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    #My Apps
+    # My Apps
     'account',
     'blog',
     'user_profile',
-    
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,8 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    
-    #Rest Framework
+
+    # Rest Framework
     'rest_framework',
     'rest_framework.authtoken'
 ]
@@ -92,7 +90,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000'
+    'http://localhost:3000'
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -115,28 +113,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-#Account Model
+# Account Model
 AUTH_USER_MODEL = 'account.Account'
 
 # Database
-#https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('POSTGRES_DB'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'PORT': 5432,
-        'HOST': 'db',
-    }
-}
-
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'mydatabase',
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get('POSTGRES_DB'),
+#         'USER': os.environ.get('POSTGRES_USER'),
+#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+#         'PORT': 5432,
+#         'HOST': 'db',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
+    }
+}
 
 
 # Password validation

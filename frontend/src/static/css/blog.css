@@ -5,6 +5,9 @@
     box-sizing: border-box;
     text-decoration: none;
 }
+#main_bg{
+    background-image:url(../img/ride.jpg) !important;
+}
 
 body {
     background-image:url(../img/ride.jpg);

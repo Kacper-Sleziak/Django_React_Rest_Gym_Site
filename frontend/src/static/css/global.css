@@ -1,0 +1,22 @@
+#root_container{
+    height: auto;
+}
+
+#main_bg{
+    height: 52vw;
+    background-image:url('../images/bar.jpg');
+    background-color: #00000042;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    
+    background-size: cover;
+    background-position: bottom;
+    background-attachment: fixed;
+    
+    
+    text-decoration: none;
+    box-sizing: border-box;
+}
