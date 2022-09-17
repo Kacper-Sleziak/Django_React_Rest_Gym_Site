@@ -1,11 +1,10 @@
+from account.models import Account
+from blog.api.serializers import BlogLikeSerializer, CommentLikeSerializer
+from blog.models import BlogLike, BlogPost, Comment, CommentLike
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from account.models import Account
-# Imports from project
-from blog.api.serializers import BlogLikeSerializer, CommentLikeSerializer
-from blog.models import BlogLike, BlogPost, Comment, CommentLike
 
 
 @permission_classes((IsAuthenticated,))

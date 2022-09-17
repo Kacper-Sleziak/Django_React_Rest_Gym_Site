@@ -1,10 +1,9 @@
 from account.models import Account
 from blog.models import BlogLike, BlogPost, Comment, CommentLike
 from rest_framework import serializers
-from rest_framework.serializers import ModelSerializer
 
 
-class CreateBlogPostSerializer(ModelSerializer):
+class CreateBlogPostSerializer(serializers.ModelSerializer):
     author = serializers.CharField(write_only=True)
 
     class Meta:
@@ -32,7 +31,7 @@ class CreateBlogPostSerializer(ModelSerializer):
         return blog_post
 
 
-class BlogPostSerializer(ModelSerializer):
+class BlogPostSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
 
     class Meta:
@@ -41,13 +40,13 @@ class BlogPostSerializer(ModelSerializer):
                   'released_date', 'last_update', 'slug', 'likes', 'author')
 
 
-class CreateCommentSerializer(ModelSerializer):
+class CreateCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('body', 'author', 'blog_post')
 
 
-class CommentSerializer(ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
 
     class Meta:
@@ -56,7 +55,7 @@ class CommentSerializer(ModelSerializer):
                   'edited', 'author')
 
 
-class BlogLikeSerializer(ModelSerializer):
+class BlogLikeSerializer(serializers.ModelSerializer):
     liker = serializers.CharField(write_only=True)
     blog_post = serializers.CharField(write_only=True)
 
@@ -82,7 +81,7 @@ class BlogLikeSerializer(ModelSerializer):
                 blog_post=blog_post, liker=liker)
 
 
-class CommentLikeSerializer(ModelSerializer):
+class CommentLikeSerializer(serializers.ModelSerializer):
     liker = serializers.CharField(write_only=True)
     comment = serializers.CharField(write_only=True)
 
