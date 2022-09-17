@@ -1,8 +1,8 @@
-from rest_framework import serializers
-from django.core.validators import EmailValidator
 from account.models import Account
 from account.validators import PasswordValidator
 from django.contrib.auth import authenticate
+from django.core.validators import EmailValidator
+from rest_framework import serializers
 
 
 class LoginSerializer(serializers.Serializer):

@@ -1,14 +1,17 @@
-from rest_framework import generics, status
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, IsAdminUser
-# Imports from project
-from blog.models import BlogPost as BlogPostModel
 from account.models import Account as AccountModel
-from blog.api.serializers import BlogPostSerializer, CreateBlogPostSerializer
 from blog.api.pagination import BlogPostsPagination
+from blog.api.serializers import BlogPostSerializer, CreateBlogPostSerializer
+from blog.models import BlogPost as BlogPostModel
+from rest_framework import generics, status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.permissions import (
+    IsAdminUser,
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly,
+)
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 # [GET] Blog Posts View
 

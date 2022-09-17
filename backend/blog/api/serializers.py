@@ -1,7 +1,7 @@
-from rest_framework.serializers import ModelSerializer
-from rest_framework import serializers
 from account.models import Account
 from blog.models import BlogLike, BlogPost, Comment, CommentLike
+from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 
 
 class CreateBlogPostSerializer(ModelSerializer):
@@ -12,7 +12,7 @@ class CreateBlogPostSerializer(ModelSerializer):
         fields = ('title', 'body', 'tag', 'author', 'image', 'short')
 
     def save(self):
-        tilte = self.validated_data['title']
+        title = self.validated_data['title']
         body = self.validated_data['body']
         tag = self.validated_data['tag']
         image = self.validated_data['image']
@@ -22,7 +22,7 @@ class CreateBlogPostSerializer(ModelSerializer):
         author = Account.objects.get(nickname=author_nickname)
 
         blog_post = BlogPost.objects.create(
-            title=tilte,
+            title=title,
             body=body,
             tag=tag,
             image=image,
@@ -71,7 +71,7 @@ class BlogLikeSerializer(ModelSerializer):
         liker = Account.objects.get(nickname=comment_author_nickname)
         queryset = BlogLike.objects.filter(blog_post=blog_post, liker=liker)
 
-        # When blog post is arleady liked by user we delete that ,,like"
+        # When blog post is already liked by user we delete that ,,like"
         if queryset.exists():
             blog_like = queryset[0]
             blog_like.delete()
@@ -97,7 +97,7 @@ class CommentLikeSerializer(ModelSerializer):
             liker = Account.objects.get(nickname=comment_author_nickname)
             queryset = CommentLike.objects.filter(comment=comment, liker=liker)
 
-            # When blog post is arleady liked by user we delete that ,,like"
+            # When blog post is already liked by user we delete that ,,like"
             if queryset.exists():
                 comment_like = queryset[0]
                 comment_like.delete()

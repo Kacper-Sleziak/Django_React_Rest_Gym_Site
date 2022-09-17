@@ -1,13 +1,12 @@
-from rest_framework.views import APIView
-from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.response import Response
-from rest_framework import status
-from user_profile.models import User_profile
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-from account.models import Account as AccountModel
 from account.api.serializers import AccountSerializer
+from account.models import Account as AccountModel
+from rest_framework import status
+from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from user_profile.api.serializers import UserProfileSerializer
+from user_profile.models import User_profile
 
 
 def get_user_with_given_nickname(nickname):

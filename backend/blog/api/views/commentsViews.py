@@ -1,12 +1,11 @@
-from rest_framework import generics, status
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-# Imports from project
-from blog.models import BlogPost, Comment as CommentModel
-from blog.api.serializers import (CommentSerializer, CreateCommentSerializer)
 from blog.api.pagination import CommentsPagination
+from blog.api.serializers import CommentSerializer, CreateCommentSerializer
+from blog.models import BlogPost
+from blog.models import Comment as CommentModel
+from rest_framework import generics, status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 # [POST] Create comment API View
 

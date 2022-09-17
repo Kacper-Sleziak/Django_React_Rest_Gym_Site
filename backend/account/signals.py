@@ -1,8 +1,9 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from account.models import Account
-from user_profile.models import User_profile
 from rest_framework.authtoken.models import Token
+from user_profile.models import User_profile
+
+from account.models import Account
 
 # Create profile for new user
 

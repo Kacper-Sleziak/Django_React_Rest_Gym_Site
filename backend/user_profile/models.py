@@ -1,7 +1,7 @@
-from django.db import models
 from django.conf import settings
-from django.dispatch import receiver
+from django.db import models
 from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 
 def avatar_upload_location(instance, filename):
@@ -12,7 +12,7 @@ def avatar_upload_location(instance, filename):
 
 class User_profile(models.Model):
     description = models.CharField(max_length=250, null=True, blank=True)
-    account = models.ForeignKey(
+    account = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         null=False,
         blank=False,

@@ -1,9 +1,11 @@
-from django.db.models.signals import pre_save, pre_delete, post_save
-from django.utils.text import slugify
-from django.dispatch import receiver
-from core.settings import BASE_DIR
 import os
-from blog.models import BlogPost, BlogLike, CommentLike
+
+from core.settings import BASE_DIR
+from django.db.models.signals import post_save, pre_delete, pre_save
+from django.dispatch import receiver
+from django.utils.text import slugify
+
+from blog.models import BlogLike, BlogPost, CommentLike
 
 # Handling slug creating
 

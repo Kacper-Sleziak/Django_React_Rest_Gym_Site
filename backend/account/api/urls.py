@@ -1,6 +1,11 @@
+from account.api.views import (
+    AccountView,
+    ChangeAccountData,
+    ChangePasswordView,
+    CreateAccountView,
+    LoginView,
+)
 from django.urls import path
-from account.api.views import (AccountView, CreateAccountView,
-                               ChangePasswordView, ChangeAccountData, LoginView)
 
 urlpatterns = [
     path('<int:pk>', AccountView.as_view()),
