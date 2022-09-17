@@ -1,10 +1,11 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-shadow */
 import { createSlice } from '@reduxjs/toolkit';
 
 const state = {
-  nickname: '',
-  email: '',
-  token: '',
+  nickname: undefined,
+  email: undefined,
+  token: undefined,
 };
 
 export const authSlice = createSlice({

@@ -13,7 +13,7 @@ function Navbar() {
   const nickname = useSelector(getNickname);
 
   const renderLoginBox = () => {
-    if (nickname === '') {
+    if (nickname === undefined) {
       return (
         <a className="link" id="login" href="blog.html">Login</a>
       );
