@@ -7,6 +7,7 @@ import Blog from './views/Blog';
 import Navbar from './components/assets/Navbar';
 import Footer from './components/assets/Footer';
 import Login from './views/Login';
+import Profile from './views/Profile';
 import './static/css/global.css';
 
 function Main() {
@@ -19,6 +20,7 @@ function Main() {
             <Route path="/" element={<HomePage />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </Router>
       </div>

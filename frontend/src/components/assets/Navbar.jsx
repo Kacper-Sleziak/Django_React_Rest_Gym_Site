@@ -15,12 +15,12 @@ function Navbar() {
   const renderLoginBox = () => {
     if (nickname === undefined) {
       return (
-        <a className="link" id="login" href="blog.html">Login</a>
+        <Link to="/login" className="link" id="login">Login</Link>
       );
     }
     return (
       <div id="login__box">
-        <Link to="/login" style={{ textDecoration: 'none' }}>
+        <Link to="/profile" style={{ textDecoration: 'none', color: 'white' }}>
           <div id="login__click">
             <PersonIcon />
             <span>{nickname}</span>
@@ -33,7 +33,7 @@ function Navbar() {
   return (
     <nav>
       <div id="navbar">
-        <a className="logo_link" href="index.html">
+        <Link to="/" className="logo_link">
           <div className="logo__navbar">
             <img src={logo} alt="Logo" />
 
@@ -42,7 +42,7 @@ function Navbar() {
               <p className="logo__navbar__text">WORLD</p>
             </span>
           </div>
-        </a>
+        </Link>
 
         <div id="menu_button">
           <div className="bar1" />
@@ -84,7 +84,7 @@ function Navbar() {
             </div>
 
             <div className="menu_item">
-              <a className="link" href="blog.html">Blog</a>
+              <Link to="/blog" className="link">Blog</Link>
             </div>
             <div className="menu_item">
               {renderLoginBox()}

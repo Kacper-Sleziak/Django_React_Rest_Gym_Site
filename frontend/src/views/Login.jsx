@@ -10,7 +10,7 @@ import logo from '../static/images/logo.png';
 import useAxiosFunction from '../api/hooks/useAxiosFunction';
 import axiosInstance from '../api/api_main_config';
 import {
-  getNickname, setStoreNickname,
+  getNickname, setStoreNickname, setStoreEmail, setStoreToken,
 } from '../store/slices/auth';
 
 function Login() {
@@ -39,11 +39,16 @@ function Login() {
 
   // Handling saving data in store
   useEffect(() => {
-    if (response) {
-      dispatch(setStoreNickname(response.nickname));
-    }
-    if (error) {
+    // Do action only if user is not logged in
+    if (nickname === undefined) {
+      if (response) {
+        dispatch(setStoreNickname(response.nickname));
+        dispatch(setStoreEmail(response.email));
+        dispatch(setStoreToken(response.token));
+      }
+      if (error) {
       // console.log(error)
+      }
     }
   }, [loading]);
 
