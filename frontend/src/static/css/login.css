@@ -1,35 +1,35 @@
-.login__bg{
-    background-color: rgba(91, 112, 131, 0.808);
+.login__bg {
+    background-color: rgb(111, 134, 153);
     height: 1000px;
 }
 
-#login__box{
+#login__box {
     cursor: pointer;
     display: flex;
     flex-direction: column;
     text-align: center;
     color: white;
-    background-color: rgb(4, 97, 4);
     border-bottom-right-radius: 6px;
     border-top-left-radius: 6px;
 }
 
-#login__header{
+#login__header {
+    margin-top: '50px';
     display: flex;
     flex-direction: column;
     align-items: center;
-    color:rgb(102, 106, 116);
+    color:rgba(252, 252, 252, 0.849);
     margin-bottom: 25px;
 }
 
-#login__header img{
+#login__header img {
     width: 75px;
     height: 75px;
     margin-left: auto;
     margin-right: auto;
 }
 
-#login__click{
+#login__click {
     display: flex;
     flex-direction: row;
     text-align: center;
@@ -37,6 +37,6 @@
     padding: 5px 10px 5px 10px;
 }
 
-#login__button{
+#login__button {
     margin-left: 130px;
 }

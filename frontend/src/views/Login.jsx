@@ -1,11 +1,18 @@
+/* eslint-disable react/jsx-closing-tag-location */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-lone-blocks */
 import React, { useEffect, useState } from 'react';
 import '../static/css/login.css';
 import TextField from '@mui/material/TextField';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import FormControl from '@mui/material/FormControl';
+import InputAdornment from '@mui/material/InputAdornment';
 import Button from '@mui/material/Button';
 import { useSelector, useDispatch } from 'react-redux';
+import Grid from '@mui/material/Unstable_Grid2';
 import logo from '../static/images/logo.png';
 import useAxiosFunction from '../api/hooks/useAxiosFunction';
 import axiosInstance from '../api/api_main_config';
@@ -23,6 +30,7 @@ function Login() {
   const dispatch = useDispatch();
   const nickname = useSelector(getNickname);
 
+  // eslint-disable-next-line no-unused-vars
   const login = () => {
     axiosFetch({
       axiosInstance,
@@ -68,41 +76,66 @@ function Login() {
   }
   return (
     <div className="login__bg">
-      <div id="login__box">
-        <div id="login__header">
-          <h1>Training World</h1>
-          <h2>Login Panel</h2>
-          <img src={logo} alt="logo" />
-        </div>
+      <Box sx={{ flexGrow: 1 }} style={{ padding: '0 250px 0 250px' }}>
+        <Grid container spacing={1}>
+          <Grid xs={4} style={{ marginTop: '100px' }}>
+            {' '}
+            <div id="login__header">
+              <h1>Training World</h1>
+              <h2>Login Panel</h2>
+              <img src={logo} alt="logo" />
+              <br />
+              <br />
+              <span>
+                To use this website with all
+                <br />
+                futures you have to been logged in
+              </span>
+            </div>
+          </Grid>
+          <Grid xs={3} style={{ marginTop: '100px' }}>
+            <Card style={{ background: '#4D6579' }}>
+              <FormControl fullWidth sx={{ m: 1 }}>
+                <TextField
+                  id="email"
+                  size="large"
+                  label="Email"
+                  variant="standard"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">
+                      <VisibilityIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                    </InputAdornment>,
+                  }}
+                />
+              </FormControl>
+              <FormControl fullWidth sx={{ m: 1 }}>
+                <TextField
+                  id="email"
+                  size="large"
+                  label="Email"
+                  variant="standard"
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">
+                      <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                    </InputAdornment>,
+                  }}
+                />
+              </FormControl>
 
-        <div id="login__fields">
-          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-            <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-            <TextField
-              id="email"
-              size="large"
-              label="Email"
-              variant="standard"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Box>
-
-          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-            <VisibilityIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-            <TextField
-              id="password"
-              size="large"
-              label="Password"
-              variant="standard"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Box>
-
-          <Button id="login__button" size="large" onClick={login}>
-            Login
-          </Button>
-        </div>
-      </div>
+              <Button id="login__button" size="large" onClick={login}>
+                Login
+              </Button>
+              <Button id="login__button" size="large" onClick={login}>
+                Register
+              </Button>
+            </Card>
+          </Grid>
+        </Grid>
+      </Box>
     </div>
   );
 }
