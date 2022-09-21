@@ -79,7 +79,7 @@ function Login() {
     );
   }
   return (
-    <div className="login__bg">
+    <div className="auth_bg">
       <Box
         sx={{
           flexGrow: 1,
@@ -91,7 +91,7 @@ function Login() {
         <Card style={{
           background: '#fff',
           maxWidth: '500px',
-          minHeight: '230px',
+          minHeight: '235px',
         }}
         >
           <FormControl fullWidth sx={{ m: 1 }}>
@@ -140,8 +140,10 @@ function Login() {
               flexDirection: 'column',
               alignItems: 'center',
             }}
+            style={{ marginTop: '5px' }}
           >
             <Button
+              type="submit"
               variant="contained"
               style={{ marginBottom: '15px' }}
               onClick={login}
@@ -154,7 +156,7 @@ function Login() {
               onClick={register}
               color="success"
             >
-              Register
+              Create Account
             </Button>
           </Box>
         </Card>

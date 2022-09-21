@@ -20,3 +20,9 @@
     text-decoration: none;
     box-sizing: border-box;
 }
+
+.auth_bg {
+    background-color: #f0f2f5f8;
+    padding: 200px 500px 0 500px;
+    height: 52vw;
+}

@@ -38,8 +38,6 @@
 }
 
 #main_bg{
-    /* height: 52vw;
-    background-image:url('../images/bar.jpg'); */
     background-color: #00000042;
     background-repeat: no-repeat;
     background-blend-mode: multiply;
