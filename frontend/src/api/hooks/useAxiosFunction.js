@@ -1,18 +1,16 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 
 const useAxiosFunction = () => {
   const [response, setResponse] = useState([]);
   const [error, setError] = useState('');
-  // const [statusCode, setStatusCode] = useState(0);
+  const [statusCode, setStatusCode] = useState(0);
   const [loading, setLoading] = useState(false); // different!
   const [controller, setController] = useState();
 
   const axiosFetch = async (configObj) => {
     const {
-      axiosInstance,
-      method,
-      url,
-      requestConfig = {},
+      axiosInstance, method, url, requestConfig = {},
     } = configObj;
 
     try {
@@ -23,10 +21,10 @@ const useAxiosFunction = () => {
         ...requestConfig,
         signal: ctrl.signal,
       });
+      setStatusCode(res.status);
       setResponse(res.data);
     } catch (err) {
-      // console.log(err.response.status);
-      // console.log(err.response.data);
+      setStatusCode(err.response.status);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -39,7 +37,7 @@ const useAxiosFunction = () => {
     [controller],
   );
 
-  return [response, error, loading, axiosFetch];
+  return [response, statusCode, error, loading, axiosFetch];
 };
 
 export default useAxiosFunction;

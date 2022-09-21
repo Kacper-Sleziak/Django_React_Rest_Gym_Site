@@ -5,9 +5,10 @@ import {
 import HomePage from './views/HomePage';
 import Profile from './views/Profile';
 import Blog from './views/Blog';
-import Navbar from './components/assets/Navbar';
-import Footer from './components/assets/Footer';
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
 import Login from './views/Login';
+import Register from './views/Register';
 import './static/css/global.css';
 
 function Main() {
@@ -21,6 +22,7 @@ function Main() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </Router>
       </div>

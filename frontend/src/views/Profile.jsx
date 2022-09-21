@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   getNickname, setStoreNickname, setStoreEmail, setStoreToken,
@@ -7,11 +8,13 @@ import {
 function Profile() {
   const dispatch = useDispatch();
   const nickname = useSelector(getNickname);
+  const navigate = useNavigate();
 
   const logOut = () => {
     dispatch(setStoreNickname(undefined));
     dispatch(setStoreEmail(undefined));
     dispatch(setStoreToken(undefined));
+    navigate('/login');
   };
 
   if (nickname === undefined) {

@@ -1,8 +1,8 @@
-#root_container{
+#root_container {
     height: auto;
 }
 
-#main_bg{
+#main_bg {
     height: 52vw;
     background-image:url('../images/bar.jpg');
     background-color: #00000042;

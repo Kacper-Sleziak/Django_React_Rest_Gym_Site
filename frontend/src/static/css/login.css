@@ -1,10 +1,11 @@
 .login__bg {
-    background-color: rgb(111, 134, 153);
-    height: 1000px;
+    background-color: #f0f2f5;
+    padding: 200px 500px 0 500px;
+    height: 52vw;
 }
 
 #login__box {
-    background-color: rgb(7, 94, 7);;
+    background-color: rgb(7, 94, 7);
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -36,8 +37,4 @@
     text-align: center;
     align-items: center;
     padding: 5px 10px 5px 10px;
-}
-
-#login__button {
-    margin-left: 130px;
 }
