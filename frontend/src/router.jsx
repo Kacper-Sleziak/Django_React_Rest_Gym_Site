@@ -11,17 +11,21 @@ import Login from './views/Login';
 import Register from './views/Register';
 import './static/css/global.css';
 
-function Main() {
+function GlobalRouter() {
   return (
     <div id="root_container">
       <div id="main_bg">
         <Router>
           <Navbar />
           <Routes>
+            {/* public routes */}
             <Route path="/" element={<HomePage />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
+
+            {/* onnly for unauthorized users */}
+            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
         </Router>
@@ -31,4 +35,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default GlobalRouter;

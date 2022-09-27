@@ -1,11 +1,11 @@
 import os
 
-from core.settings import BASE_DIR
 from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 from django.utils.text import slugify
 
 from blog.models import BlogLike, BlogPost, CommentLike
+from core.settings import BASE_DIR
 
 # Handling slug creating
 
@@ -29,6 +29,7 @@ def slug_adder(sender, instance, *args, **kwargs):
 
         instance.slug = slug
 
+
 # Handling deleting unnecessary folders and images
 
 
@@ -36,24 +37,23 @@ def slug_adder(sender, instance, *args, **kwargs):
 def delete_image_and_empty_folders(sender, instance, *args, **kwargs):
 
     author_image_blog_folder = os.path.join(
-        BASE_DIR,
-        "media_cdn",
-        "blog",
-        "blog_images",
-        f"{instance.author.email}")
+        BASE_DIR, "media_cdn", "blog", "blog_images", f"{instance.author.email}"
+    )
 
     title_image_blog_folder = os.path.join(
-        author_image_blog_folder, f"{instance.title}")
+        author_image_blog_folder, f"{instance.title}"
+    )
 
     # Deleting post image
     instance.image.delete(save=False)
 
     # Deleting empty folders
-    if(len(os.listdir(title_image_blog_folder)) == 0):
+    if len(os.listdir(title_image_blog_folder)) == 0:
         os.rmdir(title_image_blog_folder)
 
-    if(len(os.listdir(author_image_blog_folder)) == 0):
+    if len(os.listdir(author_image_blog_folder)) == 0:
         os.rmdir(author_image_blog_folder)
+
 
 # Changing number of likes
 # object - instance of model with likes (BlogPost or Comment)
@@ -68,12 +68,14 @@ def LikesHandler(object, likes_change):
     object.likes = likes
     object.save()
 
+
 # Handling increasing number of likes of blog posts
 
 
 @receiver(post_save, sender=BlogLike)
 def LikeBlogPost(sender, instance, *args, **kwargs):
     LikesHandler(instance.blog_post, 1)
+
 
 # Handling increasing number of likes of comment
 
@@ -82,12 +84,14 @@ def LikeBlogPost(sender, instance, *args, **kwargs):
 def LikeComment(sender, instance, *args, **kwargs):
     LikesHandler(instance.comments, 1)
 
+
 # Handling decreasing number of likes of blog post
 
 
 @receiver(pre_delete, sender=BlogLike)
 def UnLikeBlogPost(sender, instance, *args, **kwargs):
     LikesHandler(instance.blog_post, -1)
+
 
 # Handling decreasing number of likes of comment
 

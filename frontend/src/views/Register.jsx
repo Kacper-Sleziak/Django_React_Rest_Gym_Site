@@ -1,6 +1,7 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import '../static/css/login.css';
 import TextField from '@mui/material/TextField';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -10,31 +11,63 @@ import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
 import Button from '@mui/material/Button';
-import { useSelector } from 'react-redux';
-import { getNickname } from '../store/slices/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import useAxiosFunction from '../hooks/useAxiosFunction';
+import axiosInstance from '../api/api_main_config';
+import {
+  getNickname,
+  setStoreNickname,
+  setStoreEmail,
+  setStoreToken,
+  changeAuth,
+  isAuth,
+} from '../store/slices/auth';
 
 function Register() {
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
+  const [registerSuccess, setRegisterSuccess] = useState(false);
 
+  const [response, statusCode, error, loading, axiosFetch] = useAxiosFunction();
   const storeNickname = useSelector(getNickname);
+  const isStoreAuth = useSelector(isAuth);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  function Auth() {
-    // To Do
-    // Set Response data in store
-  }
+  const register = () => {
+    axiosFetch({
+      axiosInstance,
+      method: 'POST',
+      url: '/account/register',
+      requestConfig: {
+        email,
+        nickname,
+        password,
+        password2,
+      },
+    });
+    setPassword('');
+    setPassword2('');
+  };
 
-  // Return authorized users to home page
   useEffect(() => {
-    if (storeNickname !== undefined) {
-      navigate('/');
+    if (statusCode === 200) {
+      dispatch(setStoreNickname(response.nickname));
+      dispatch(setStoreEmail(response.email));
+      dispatch(setStoreToken(response.token));
+      dispatch(changeAuth());
     }
-  });
+    if (error) {
+      // console.log(error)
+    }
+  }, [loading]);
 
+  if (isStoreAuth) {
+    return (<Navigate to="/" />);
+  }
   return (
     <div className="auth_bg">
       <Box
@@ -57,6 +90,7 @@ function Register() {
               size="large"
               label="Email"
               variant="standard"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               InputProps={{
                 startAdornment: (
@@ -75,6 +109,7 @@ function Register() {
               size="large"
               label="Nickname"
               variant="standard"
+              value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               InputProps={{
                 startAdornment: (
@@ -93,6 +128,7 @@ function Register() {
               label="Password"
               type="password"
               variant="standard"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
               InputProps={{
                 startAdornment: (
@@ -113,6 +149,7 @@ function Register() {
               label="Repeat Password"
               type="password"
               variant="standard"
+              value={password2}
               onChange={(e) => setPassword2(e.target.value)}
               InputProps={{
                 startAdornment: (
@@ -138,6 +175,7 @@ function Register() {
               size="large"
               variant="contained"
               color="success"
+              onClick={(register)}
             >
               Register
             </Button>

@@ -1,8 +1,8 @@
+from django.contrib.auth import authenticate
+from rest_framework import serializers
+
 from account.models import Account
 from account.validators import PasswordValidator
-from django.contrib.auth import authenticate
-from django.core.validators import EmailValidator
-from rest_framework import serializers
 
 
 class LoginSerializer(serializers.Serializer):
@@ -12,38 +12,38 @@ class LoginSerializer(serializers.Serializer):
       * password.
     It will try to authenticate the user with when validated.
     """
-    email = serializers.CharField(
-        label="email",
-        write_only=True
-    )
+
+    email = serializers.CharField(label="email", write_only=True)
     password = serializers.CharField(
         label="Password",
         # This will be used when the DRF browsable API is enabled
-        style={'input_type': 'password'},
+        style={"input_type": "password"},
         trim_whitespace=False,
-        write_only=True
+        write_only=True,
     )
 
     def validate(self, attrs):
         # Take username and password from request
-        email = attrs.get('email')
-        password = attrs.get('password')
+        email = attrs.get("email")
+        password = attrs.get("password")
 
         if email and password:
             # Try to authenticate the user using Django auth framework.
-            user = authenticate(request=self.context.get('request'),
-                                username=email, password=password)
+            user = authenticate(
+                request=self.context.get("request"), username=email, password=password
+            )
             if not user:
                 # If we don't have a regular user, raise a ValidationError
-                msg = 'Access denied: wrong username or password.'
-                raise serializers.ValidationError(msg, code='authorization')
+                msg = "Access denied: wrong username or password."
+                raise serializers.ValidationError(msg, code="authorization")
         else:
             msg = 'Both "username" and "password" are required.'
-            raise serializers.ValidationError(msg, code='authorization')
+            raise serializers.ValidationError(msg, code="authorization")
         # We have a valid user, put it in the serializer's validated_data.
         # It will be used in the view.
-        attrs['user'] = user
+        attrs["user"] = user
         return attrs
+
 
 # Serializer for most account's operations
 
@@ -58,31 +58,30 @@ class AccountSerializer(serializers.ModelSerializer):
     is_active = serializers.CharField(read_only=True)
     is_staff = serializers.CharField(read_only=True)
     is_superuser = serializers.CharField(read_only=True)
-    password = serializers.CharField(
-        style={'input_type': 'password'}, write_only=True)
-    password2 = serializers.CharField(
-        style={'input_type': 'password'}, write_only=True)
+    password = serializers.CharField(style={"input_type": "password"}, write_only=True)
+    password2 = serializers.CharField(style={"input_type": "password"}, write_only=True)
 
     class Meta:
         model = Account
         fields = (
-            'id',
-            'email',
-            'nickname',
-            'first_name',
-            'last_name',
-            'date_joined',
-            'last_login',
-            'is_admin',
-            'is_staff',
-            'is_superuser',
-            'is_active',
-            'password',
-            'password2')
+            "id",
+            "email",
+            "nickname",
+            "first_name",
+            "last_name",
+            "date_joined",
+            "last_login",
+            "is_admin",
+            "is_staff",
+            "is_superuser",
+            "is_active",
+            "password",
+            "password2",
+        )
 
     def validate(self, data):
-        password = data['password']
-        password2 = data['password2']
+        password = data["password"]
+        password2 = data["password2"]
 
         # Using custome validator
         password_validator = PasswordValidator(password=password)
@@ -91,10 +90,9 @@ class AccountSerializer(serializers.ModelSerializer):
 
     def save(self):
         account = Account(
-            email=self.validated_data['email'],
-            nickname=self.validated_data['nickname']
+            email=self.validated_data["email"], nickname=self.validated_data["nickname"]
         )
-        password = self.validated_data['password']
+        password = self.validated_data["password"]
         account.set_password(password)
         account.save()
         return account
@@ -107,24 +105,22 @@ class PasswordChangeSerializer(serializers.Serializer):
 
     # Validate check if old_password == password
     def validate(self, data):
-        if not self.context['request'].user.check_password(
-                data.get('old_password')):
-            raise serializers.ValidationError(
-                {'old_password': 'Wrong password.'})
+        if not self.context["request"].user.check_password(data.get("old_password")):
+            raise serializers.ValidationError({"old_password": "Wrong password."})
 
-        password_validator = PasswordValidator(data.get('password'))
-        password_validator.validate(8, data.get('password2'))
+        password_validator = PasswordValidator(data.get("password"))
+        password_validator.validate(8, data.get("password2"))
 
         return data
 
     def update(self, instance, validated_data):
-        instance.set_password(validated_data['password'])
+        instance.set_password(validated_data["password"])
         instance.save()
         return instance
 
     @property
     def data(self):
-        return {'Success': True}
+        return {"Success": True}
 
 
 class AccountChangeDataSerializer(serializers.Serializer):
@@ -134,26 +130,27 @@ class AccountChangeDataSerializer(serializers.Serializer):
 
     # Validate check if in data base exsists user with given nickname
     def validate(self, data):
-        if data.get('nickname'):
-            nickname = data.get('nickname')
+        if data.get("nickname"):
+            nickname = data.get("nickname")
             if Account.objects.filter(nickname=nickname).exists():
                 raise serializers.ValidationError(
-                    {'nickname': f'There is a user with nickname {nickname}.'})
+                    {"nickname": f"There is a user with nickname {nickname}."}
+                )
 
     def update(self, instance, validated_data):
 
-        if 'nickname' in validated_data:
-            instance.nickname = validated_data['nickname']
+        if "nickname" in validated_data:
+            instance.nickname = validated_data["nickname"]
 
-        if 'first_name' in validated_data:
-            instance.first_name = validated_data['first_name']
+        if "first_name" in validated_data:
+            instance.first_name = validated_data["first_name"]
 
-        if 'last_name' in validated_data:
-            instance.last_name = validated_data['last_name']
+        if "last_name" in validated_data:
+            instance.last_name = validated_data["last_name"]
 
         instance.save()
         return instance
 
     @property
     def data(self):
-        return {'Success': True}
+        return {"Success": True}

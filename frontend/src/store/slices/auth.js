@@ -6,6 +6,7 @@ const state = {
   nickname: undefined,
   email: undefined,
   token: undefined,
+  isAuth: false,
 };
 
 export const authSlice = createSlice({
@@ -21,6 +22,9 @@ export const authSlice = createSlice({
     setStoreEmail: (state, action) => {
       state.email = action.payload;
     },
+    changeAuth: (state) => {
+      state.isAuth = !state.isAuth;
+    },
   },
 });
 
@@ -28,8 +32,11 @@ export const authSlice = createSlice({
 export const getNickname = (state) => state.auth.nickname;
 export const getToken = (state) => state.auth.token;
 export const getEmail = (state) => state.auth.email;
+export const isAuth = (state) => state.auth.isAuth;
 
 // Actions
-export const { setStoreNickname, setStoreToken, setStoreEmail } = authSlice.actions;
+export const {
+  setStoreNickname, setStoreToken, setStoreEmail, changeAuth,
+} = authSlice.actions;
 
 export default authSlice.reducer;

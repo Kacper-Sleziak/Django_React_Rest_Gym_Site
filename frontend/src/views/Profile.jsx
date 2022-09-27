@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  getNickname, setStoreNickname, setStoreEmail, setStoreToken,
+  getNickname, setStoreNickname, setStoreEmail, setStoreToken, changeAuth,
 } from '../store/slices/auth';
 
 function Profile() {
@@ -14,6 +14,7 @@ function Profile() {
     dispatch(setStoreNickname(undefined));
     dispatch(setStoreEmail(undefined));
     dispatch(setStoreToken(undefined));
+    dispatch(changeAuth());
     navigate('/login');
   };
 

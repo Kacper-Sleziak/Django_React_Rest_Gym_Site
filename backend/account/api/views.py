@@ -1,3 +1,10 @@
+from rest_framework import generics, status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from account.api.serializers import (
     AccountChangeDataSerializer,
     AccountSerializer,
@@ -5,12 +12,6 @@ from account.api.serializers import (
     PasswordChangeSerializer,
 )
 from account.models import Account as AccountModel
-from rest_framework import generics, status
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.authtoken.models import Token
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 
 def is_account_with_given_id(self, pk):
@@ -26,20 +27,21 @@ def is_account_with_given_id(self, pk):
 # [POST] Login API View
 # End point needs password and user's email
 
-class LoginView(APIView):
 
+class LoginView(APIView):
     def post(self, request, format=None):
-        serializer = LoginSerializer(data=self.request.data,
-                                     context={'request': self.request})
+        serializer = LoginSerializer(
+            data=self.request.data, context={"request": self.request}
+        )
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
+        user = serializer.validated_data["user"]
         token = Token.objects.get(user=user)
 
-        return Response({
-            'token': token.key,
-            'email': user.email,
-            'nickname': user.nickname
-        }, status=status.HTTP_200_OK)
+        return Response(
+            {"token": token.key, "email": user.email, "nickname": user.nickname},
+            status=status.HTTP_200_OK,
+        )
+
 
 # [DELETE, GET] Account View
 
@@ -50,9 +52,8 @@ class AccountView(APIView):
     def get(self, request, pk, format=None):
         if self.is_account_with_given_id(pk):
             return Response(
-                self.serializer_class(
-                    request.data),
-                status=status.HTTP_200_OK)
+                self.serializer_class(request.data), status=status.HTTP_200_OK
+            )
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     def delete(self, request, pk, format=None):
@@ -65,6 +66,7 @@ class AccountView(APIView):
         account.save()
 
         return Response(status=status.HTTP_200_OK)
+
 
 # [POST] View Creating Account by post request
 # End Point needs nickname, email, password and password2
@@ -86,6 +88,7 @@ class CreateAccountView(APIView):
             return Response(feedback_data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 # [PUT] View Change password of account
 # End Point need old_password, password, and password2
 
@@ -98,6 +101,7 @@ class ChangePasswordView(generics.UpdateAPIView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
 
 # [PUT] View Change data of account
 # Data includes nickname, first_name, last_name,

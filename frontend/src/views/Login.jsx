@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import '../static/css/login.css';
 import TextField from '@mui/material/TextField';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -9,14 +9,15 @@ import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
 import Button from '@mui/material/Button';
-import { useSelector, useDispatch } from 'react-redux';
-import useAxiosFunction from '../api/hooks/useAxiosFunction';
+import { useDispatch, useSelector } from 'react-redux';
+import useAxiosFunction from '../hooks/useAxiosFunction';
 import axiosInstance from '../api/api_main_config';
 import {
-  getNickname,
   setStoreNickname,
   setStoreEmail,
   setStoreToken,
+  changeAuth,
+  isAuth,
 } from '../store/slices/auth';
 
 function Login() {
@@ -25,11 +26,9 @@ function Login() {
   const [password, setPassword] = useState('');
 
   const [response, statusCode, error, loading, axiosFetch] = useAxiosFunction();
-
   const dispatch = useDispatch();
-  const nickname = useSelector(getNickname);
-
   const navigate = useNavigate();
+  const isStoreAuth = useSelector(isAuth);
 
   const login = () => {
     axiosFetch({
@@ -51,32 +50,20 @@ function Login() {
 
   // Handling saving data in store
   useEffect(() => {
-    // Do action only if user is not logged in
-    if (nickname === undefined) {
+    if (statusCode === 200) {
       dispatch(setStoreNickname(response.nickname));
       dispatch(setStoreEmail(response.email));
       dispatch(setStoreToken(response.token));
-      if (statusCode === 200) {
-        navigate('/');
-      }
-      if (error) {
-        // console.log(error)
-      }
+      dispatch(changeAuth());
+      navigate('/');
+    }
+    if (error) {
+      // console.log(error)
     }
   }, [loading]);
 
-  useEffect(() => {}, [nickname]);
-
-  if (nickname !== undefined) {
-    return (
-      <div className="login">
-        <h1>
-          {nickname}
-          {' '}
-          you are arleady logged in!
-        </h1>
-      </div>
-    );
+  if (isStoreAuth) {
+    return (<Navigate to="/" />);
   }
   return (
     <div className="auth_bg">
