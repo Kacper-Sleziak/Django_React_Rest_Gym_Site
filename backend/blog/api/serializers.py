@@ -1,6 +1,7 @@
+from rest_framework import serializers
+
 from account.models import Account
 from blog.models import BlogLike, BlogPost, Comment, CommentLike
-from rest_framework import serializers
 
 
 class CreateBlogPostSerializer(serializers.ModelSerializer):

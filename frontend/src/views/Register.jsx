@@ -28,10 +28,8 @@ function Register() {
   const [password2, setPassword2] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
-  const [registerSuccess, setRegisterSuccess] = useState(false);
 
   const [response, statusCode, error, loading, axiosFetch] = useAxiosFunction();
-  const storeNickname = useSelector(getNickname);
   const isStoreAuth = useSelector(isAuth);
 
   const navigate = useNavigate();

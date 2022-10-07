@@ -14,22 +14,20 @@ import './static/css/global.css';
 function GlobalRouter() {
   return (
     <div id="root_container">
-      <div id="main_bg">
-        <Router>
-          <Navbar />
-          <Routes>
-            {/* public routes */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/profile" element={<Profile />} />
+      <Router>
+        <Navbar />
+        <Routes>
+          {/* public routes */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
 
-            {/* onnly for unauthorized users */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        </Router>
-      </div>
+          {/* onnly for unauthorized users */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </Router>
       <Footer />
     </div>
   );
