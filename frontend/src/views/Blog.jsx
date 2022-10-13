@@ -9,22 +9,30 @@ function Blog() {
       <div className="blog_header">
         <span>Blog</span>
       </div>
-      <Box
-        style={{ background: 'white', minHeight: '800px', paddingTop: '80px' }}
-        sx={{
-          display: 'flex',
-          flexGrow: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          flexWrap: 'wrap',
-        }}
-        spacing="sm"
+      <div
+        style={{ background: 'white' }}
       >
-        <Thumbnail />
-        <Thumbnail />
-        <Thumbnail />
-        <Thumbnail />
-      </Box>
+        <Box
+          style={{
+            minHeight: '800px', paddingTop: '80px',
+          }}
+          sx={{
+            display: 'flex',
+            flexGrow: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            flexWrap: 'wrap',
+          }}
+          spacing="sm"
+        >
+          <Thumbnail
+            tag="tag"
+            date="11.01.2000"
+            title="welcome"
+            short="blblblblblbbllblblb"
+          />
+        </Box>
+      </div>
     </div>
   );
 }

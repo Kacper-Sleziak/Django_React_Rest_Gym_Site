@@ -1,24 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import wege from '../../static/images/wege.webp';
 
-function Thumbnail() {
+function Thumbnail({
+  tag, date, title, short,
+}) {
   return (
     <div className="post">
       <div className="img_box">
         <img className="post_img" src={wege} alt="" />
         <span>
-          Diet
+          {tag}
         </span>
       </div>
-      <h5>28.08.2021</h5>
-      <h1>Vegetables</h1>
+      <h5>{date}</h5>
+      <h1>{title}</h1>
       <span className="post_short">
-        Lorem ipsum dolor sit amet consectetur adipisicing
-        elit. Deleniti commodi velit  tempore non asperiores
-        ratione voluptates elit.  Deleniti commodi velit
-        Lorem ipsum dolor sit amet consectetur adipisicing
-        elit. Deleniti commodi velit tempore non asperiores
-        ratione voluptates elit...
+        {short}
       </span>
       <div className="read_more">
         <span>Read More</span>
@@ -26,5 +24,17 @@ function Thumbnail() {
     </div>
   );
 }
+Thumbnail.defaultProps = {
+  tag: null,
+  date: null,
+  title: null,
+  short: null,
+};
+Thumbnail.propTypes = {
+  tag: PropTypes.string,
+  date: PropTypes.string,
+  title: PropTypes.string,
+  short: PropTypes.string,
+};
 
 export default Thumbnail;
