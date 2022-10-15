@@ -2,9 +2,38 @@ import React from 'react';
 import '../static/css/blog.css';
 import Box from '@mui/material/Box';
 import Thumbnail from '../components/blog/Thumbnail';
+import useAxios from '../hooks/useAxios';
+import axiosInstance from '../api/api_main_config';
+import { useEffect } from 'react';
 
 function Blog() {
+  // eslint-disable-next-line no-unused-vars
+  const [blogs, error, loading, refetch] = useAxios({
+    axiosInstance: axiosInstance,
+    method: 'GET',
+    url: '/blog',
+  });
+
+  const renderBlogShorts = () => {
+    if (blogs.results === undefined){
+      return (<h1>There is no posts to display</h1>)
+    }
+    else {
+      return(
+        blogs.results.map((blog) => (
+          <Thumbnail
+          tag={blog.tag}
+          date={blog.last_update}
+          title={blog.title}
+          short={blog.short}
+          />
+        ))
+      );
+    }
+  }
+  
   return (
+    <div>
     <div id="main_container_blog">
       <div className="blog_header">
         <span>Blog</span>
@@ -14,7 +43,7 @@ function Blog() {
       >
         <Box
           style={{
-            minHeight: '800px', paddingTop: '80px',
+            minHeight: '800px', paddingTop: '80px'
           }}
           sx={{
             display: 'flex',
@@ -25,14 +54,10 @@ function Blog() {
           }}
           spacing="sm"
         >
-          <Thumbnail
-            tag="tag"
-            date="11.01.2000"
-            title="welcome"
-            short="blblblblblbbllblblb"
-          />
+          {renderBlogShorts()}
         </Box>
       </div>
+    </div>
     </div>
   );
 }
