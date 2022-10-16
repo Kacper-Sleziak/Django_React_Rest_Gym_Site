@@ -21,6 +21,7 @@ class AllBlogPosts(generics.ListAPIView):
     serializer_class = BlogPostSerializer
     pagination_class = BlogPostsPagination
 
+
 # [POST] Create Blog Post API View
 
 
@@ -36,6 +37,7 @@ class CreateBlogPostView(APIView):
             serializer = BlogPostSerializer(new_blog_post)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # [GET, PUT, DELETE] Blog Post API View
 
@@ -67,8 +69,8 @@ class BlogPostView(APIView):
             blog_post = BlogPostModel.objects.get(slug=slug)
 
             return Response(
-                BlogPostSerializer(blog_post).data,
-                status=status.HTTP_200_OK)
+                BlogPostSerializer(blog_post).data, status=status.HTTP_200_OK
+            )
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     def put(self, request, slug, format=None):
@@ -97,6 +99,7 @@ class BlogPostView(APIView):
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
+
 # [GET] Get all blog posts of author
 
 
@@ -104,6 +107,6 @@ class BlogPostsOfAuthor(generics.ListAPIView):
     serializer_class = BlogPostSerializer
 
     def get_queryset(self):
-        nickname = self.kwargs['nickname']
+        nickname = self.kwargs["nickname"]
         author = AccountModel.objects.get(nickname=nickname)
         return BlogPostModel.objects.all().filter(author=author)

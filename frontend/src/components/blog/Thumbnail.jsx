@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import wege from '../../static/images/wege.webp';
 
 function Thumbnail({
-  tag, date, title, short,
+  tag, date, title, short, img
 }) {
   return (
     <div className="post">
       <div className="img_box">
-        <img className="post_img" src={wege} alt="" />
+        <img className="post_img" src={img} alt="" />
         <span>
           {tag}
         </span>
@@ -29,12 +28,14 @@ Thumbnail.defaultProps = {
   date: null,
   title: null,
   short: null,
+  img: null,
 };
 Thumbnail.propTypes = {
   tag: PropTypes.string,
   date: PropTypes.string,
   title: PropTypes.string,
   short: PropTypes.string,
+  img: PropTypes.string,
 };
 
 export default Thumbnail;

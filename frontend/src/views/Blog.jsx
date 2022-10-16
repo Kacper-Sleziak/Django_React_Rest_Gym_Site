@@ -7,11 +7,10 @@ import axiosInstance from '../api/api_main_config';
 import { useEffect } from 'react';
 
 function Blog() {
-  // eslint-disable-next-line no-unused-vars
   const [blogs, error, loading, refetch] = useAxios({
     axiosInstance: axiosInstance,
     method: 'GET',
-    url: '/blog',
+    url: '/blog/',
   });
 
   const renderBlogShorts = () => {
@@ -26,6 +25,7 @@ function Blog() {
           date={blog.last_update}
           title={blog.title}
           short={blog.short}
+          img={blog.image}
           />
         ))
       );
