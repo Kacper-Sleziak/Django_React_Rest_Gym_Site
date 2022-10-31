@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import axiosInstance from '../api/api_main_config';
+import { useSelector } from 'react-redux';
 import useAxios from '../hooks/useAxios';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
@@ -12,7 +13,9 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Pagination from '@mui/material/Pagination';
 import '../static/css/article.css';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import Divider from '@mui/material/Divider';
+import { getNickname }from '../store/slices/auth';
 
 function Article(){  
     let { slug } = useParams();
@@ -21,7 +24,8 @@ function Article(){
     const [currentPage, setCurrentPage] = useState(1);
     var totalCommentPages = 0;
     const commentsPerPage = 6;
-  
+
+    const userNickname = useSelector(getNickname);
 
     const [response, error, loading, refetch] = useAxios({
         axiosInstance: axiosInstance,
@@ -147,7 +151,7 @@ function Article(){
                                     }
                                 />
                             <div>
-                                <FavoriteBorderIcon fontSize='small' sx={{marginTop:1}}/>
+                                {RenderLikeIcon(comment.author)}
                                 <span>{comment.likes}</span>
                             </div>
                             
@@ -160,6 +164,13 @@ function Article(){
                   ); 
             }
         }
+    }
+
+    const RenderLikeIcon = (author) => {
+        if (userNickname === author){
+            return(<FavoriteIcon fontSize='small' sx={{marginTop:1}}/>)
+        }
+        return(<FavoriteBorderIcon fontSize='small' sx={{marginTop:1}}/>)
     }
 
     return (renderBlog())

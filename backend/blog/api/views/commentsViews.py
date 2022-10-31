@@ -19,9 +19,10 @@ class CreateCommentView(APIView):
         if serializer.is_valid():
             new_comment = serializer.save()
             return Response(
-                CommentSerializer(new_comment).data,
-                status=status.HTTP_201_CREATED)
+                CommentSerializer(new_comment).data, status=status.HTTP_201_CREATED
+            )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # [PUT, DELETE] API comment View
 
@@ -72,6 +73,7 @@ class CommentView(APIView):
         else:
             return Response(stauts=status.HTTP_403_FORBIDDEN)
 
+
 # [GET] Returning all comments of blog post
 
 
@@ -80,6 +82,6 @@ class CommentsOfBlogPost(generics.ListAPIView):
     pagination_class = CommentsPagination
 
     def get_queryset(self):
-        slug = self.kwargs['slug']
+        slug = self.kwargs["slug"]
         blog_post = BlogPost.objects.get(slug=slug)
-        return CommentModel.objects.all().filter(blog_post=blog_post)
+        return CommentModel.objects.all().filter(blog_post=blog_post).order_by("-likes")
