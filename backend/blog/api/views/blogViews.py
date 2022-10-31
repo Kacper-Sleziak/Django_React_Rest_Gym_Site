@@ -4,6 +4,7 @@ from blog.api.serializers import BlogPostSerializer, CreateBlogPostSerializer
 from blog.models import BlogPost as BlogPostModel
 from rest_framework import generics, status
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import (
     IsAdminUser,

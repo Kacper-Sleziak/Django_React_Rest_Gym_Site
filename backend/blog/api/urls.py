@@ -14,6 +14,7 @@ from django.urls import path
 
 urlpatterns = [
     path("", AllBlogPosts.as_view()),
+    path("list", AllBlogPosts.as_view()),
     path("create", CreateBlogPostView.as_view()),
     path("<str:slug>", BlogPostView.as_view()),
     path("author/<str:nickname>/", BlogPostsOfAuthor.as_view()),
