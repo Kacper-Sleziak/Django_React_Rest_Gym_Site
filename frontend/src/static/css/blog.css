@@ -105,6 +105,12 @@
     width: 90px;
     display: flex;
     background-color: rgb(47, 177, 82);
+    transition: all 0.5s;
+}
+
+.read_more:hover {
+    cursor: pointer;
+    background-color: rgb(80, 183, 107);
 }
 
 .post h5 {

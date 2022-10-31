@@ -25,7 +25,7 @@ const useAxios = (configObj) => {
                     ...requestConfig,
                     signal: controller.signal
                 });
-                setResponse(res.data);
+                setResponse(res);
             } catch (err) {
                 setError(err.message);
             } finally {

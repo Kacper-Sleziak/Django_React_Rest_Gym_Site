@@ -9,25 +9,21 @@ class CreateBlogPostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BlogPost
-        fields = ('title', 'body', 'tag', 'author', 'image', 'short')
+        fields = ("title", "body", "tag", "author", "image", "short")
 
     def save(self):
-        title = self.validated_data['title']
-        body = self.validated_data['body']
-        tag = self.validated_data['tag']
-        image = self.validated_data['image']
-        short = self.validated_data['short']
+        title = self.validated_data["title"]
+        body = self.validated_data["body"]
+        tag = self.validated_data["tag"]
+        image = self.validated_data["image"]
+        short = self.validated_data["short"]
 
-        author_nickname = self.validated_data['author']
+        author_nickname = self.validated_data["author"]
         author = Account.objects.get(nickname=author_nickname)
 
         blog_post = BlogPost.objects.create(
-            title=title,
-            body=body,
-            tag=tag,
-            image=image,
-            short=short,
-            author=author)
+            title=title, body=body, tag=tag, image=image, short=short, author=author
+        )
         blog_post.save()
         return blog_post
 
@@ -37,14 +33,25 @@ class BlogPostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BlogPost
-        fields = ('title', 'body', 'short', 'tag', 'image', 'short',
-                  'released_date', 'last_update', 'slug', 'likes', 'author')
+        fields = (
+            "title",
+            "body",
+            "short",
+            "tag",
+            "image",
+            "short",
+            "released_date",
+            "last_update",
+            "slug",
+            "likes",
+            "author",
+        )
 
 
 class CreateCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('body', 'author', 'blog_post')
+        fields = ("body", "author", "blog_post")
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -52,8 +59,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('body', 'likes', 'released_date',
-                  'edited', 'author')
+        fields = ("body", "likes", "released_date", "edited", "author")
 
 
 class BlogLikeSerializer(serializers.ModelSerializer):
@@ -62,11 +68,11 @@ class BlogLikeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BlogLike
-        fields = ('blog_post', 'liker')
+        fields = ("blog_post", "liker")
 
     def save(self):
-        blog_post_slug = self.validated_data['blog_post']
-        comment_author_nickname = self.validated_data['liker']
+        blog_post_slug = self.validated_data["blog_post"]
+        comment_author_nickname = self.validated_data["liker"]
         blog_post = BlogPost.objects.get(slug=blog_post_slug)
         liker = Account.objects.get(nickname=comment_author_nickname)
         queryset = BlogLike.objects.filter(blog_post=blog_post, liker=liker)
@@ -78,8 +84,7 @@ class BlogLikeSerializer(serializers.ModelSerializer):
 
         # When user want to like the post
         else:
-            blog_like = BlogLike.objects.create(
-                blog_post=blog_post, liker=liker)
+            blog_like = BlogLike.objects.create(blog_post=blog_post, liker=liker)
 
 
 class CommentLikeSerializer(serializers.ModelSerializer):
@@ -88,11 +93,11 @@ class CommentLikeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CommentLike
-        fields = ('comment', 'liker')
+        fields = ("comment", "liker")
 
         def save(self):
-            comment_id = self.validated_data['comment']
-            comment_author_nickname = self.validated_data['liker']
+            comment_id = self.validated_data["comment"]
+            comment_author_nickname = self.validated_data["liker"]
             comment = Comment.objects.get(id=comment_id)
             liker = Account.objects.get(nickname=comment_author_nickname)
             queryset = CommentLike.objects.filter(comment=comment, liker=liker)
@@ -104,5 +109,4 @@ class CommentLikeSerializer(serializers.ModelSerializer):
 
             # When user want to like the post
             else:
-                comment_like = CommentLike.objects.create(
-                    comment=comment, liker=liker)
+                comment_like = CommentLike.objects.create(comment=comment, liker=liker)

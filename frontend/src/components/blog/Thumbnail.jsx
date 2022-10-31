@@ -1,25 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 function Thumbnail({
-  tag, date, title, short, img
+  key, blog
 }) {
+  
+  const navigate = useNavigate();
+
   return (
     <div className="post">
       <div className="img_box">
-        <img className="post_img" src={img} alt="" />
+        <img className="post_img" src={blog.image} alt={blog.title} />
         <span>
-          {tag}
+          {blog.tag}
         </span>
       </div>
-      <h5>{date}</h5>
-      <h1>{title}</h1>
+      <h5>{blog.date}</h5>
+      <h1>{blog.title}</h1>
       <span className="post_short">
-        {short}
+        {blog.short}
       </span>
-      <div className="read_more">
-        <span>Read More</span>
-      </div>
+      <button className="read_more" onClick={()=> navigate(`/article/${blog.slug}`)}>
+        Read More
+      </button>
     </div>
   );
 }

@@ -59,7 +59,6 @@ function Register() {
       dispatch(changeAuth());
     }
     if (error) {
-      // console.log(error)
     }
   }, [loading]);
 

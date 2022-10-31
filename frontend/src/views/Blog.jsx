@@ -11,28 +11,25 @@ function Blog() {
   var totalPages = 0;
   const blogsPerPage = 6;
 
-  const [blogs, error, loading, refetch] = useAxios({
+  const [response, error, loading, refetch] = useAxios({
     axiosInstance: axiosInstance,
     method: 'GET',
     url: `/blog/?page=${currentPage}`,
   });
 
   const renderBlogShorts = () => {
-    if (blogs.results === undefined){
+    let blogs = response.data
+    
+    if (blogs === undefined){
       return (<h1>There is no posts to display</h1>)
     }
     else {
       totalPages = Math.ceil(blogs.count/blogsPerPage)
-      
       return(
         blogs.results.map((blog) => (
           <Thumbnail
           key={blog.id}
-          tag={blog.tag}
-          date={blog.last_update}
-          title={blog.title}
-          short={blog.short}
-          img={blog.image}
+          blog={blog}
           />
         ))
       ); 
@@ -41,7 +38,6 @@ function Blog() {
 
   const onPageChange = (event, page) => {
     if (currentPage !== page){
-      console.log(page)
       setCurrentPage(page)
       refetch()
     }
