@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import axiosInstance from '../api/api_main_config';
+import getAuthAxiosInstance from '../api/api_main_config';
 import { useSelector } from 'react-redux';
 import useAxios from '../hooks/useAxios';
 import ListItemText from '@mui/material/ListItemText';
@@ -16,36 +17,60 @@ import '../static/css/article.css';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Divider from '@mui/material/Divider';
-import { getNickname }from '../store/slices/auth';
+import { getNickname, getId, getToken }from '../store/slices/auth';
 import Button from '@mui/material/Button';
+import useAxiosFunction from '../hooks/useAxiosFunction';
 
 function Article(){  
+
+    
     let { slug } = useParams();
     const serverIp = "http://127.0.0.1:8000/"
     
+    // states
     const [currentPage, setCurrentPage] = useState(1);
     const [newComment, setNewComment] = useState("");
+    
+    // comments settings
     var totalCommentPages = 0;
     const commentsPerPage = 6;
 
+    // informations abour user
     const userNickname = useSelector(getNickname);
+    const userId = useSelector(getId);
+    const userToken = useSelector(getToken);
 
+    // articles api handler
     const [response, error, loading, refetch] = useAxios({
         axiosInstance: axiosInstance,
         method: 'GET',
         url: `/blog/${slug}`,
       });
-
+    
+    // comments api handler
     const [comResponse, comError, comLoading, comRefetch] = useAxios({
         axiosInstance: axiosInstance,
         method: 'GET',
         url: `/blog/comment/${slug}/?page=${currentPage}`,
       });
+    
+    // new comment api handler
+    const [newComResponse, newComStatusCode, newComError, newComLoading, axiosFetch] = useAxiosFunction();
 
     const addNewComment = () => {
-        console.log(newComment)
+        const postId = response.data.id 
+        axiosFetch({
+            axiosInstance: getAuthAxiosInstance(userToken),
+            method: 'POST',
+            url: '/blog/comment/create/',
+            requestConfig: {
+                author: userId,
+                blog_post: postId,
+                body: newComment,
+              },
+        });
         setNewComment("")
-    }
+    };
 
     const onPageChange = (event, page) => {
         if (currentPage !== page){

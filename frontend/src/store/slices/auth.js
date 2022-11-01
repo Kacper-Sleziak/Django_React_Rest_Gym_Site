@@ -3,6 +3,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const state = {
+  id: undefined,
   nickname: undefined,
   email: undefined,
   token: undefined,
@@ -22,6 +23,9 @@ export const authSlice = createSlice({
     setStoreEmail: (state, action) => {
       state.email = action.payload;
     },
+    setStoreId: (state, action) => {
+      state.id = action.payload;
+    },
     changeAuth: (state) => {
       state.isAuth = !state.isAuth;
     },
@@ -32,11 +36,12 @@ export const authSlice = createSlice({
 export const getNickname = (state) => state.auth.nickname;
 export const getToken = (state) => state.auth.token;
 export const getEmail = (state) => state.auth.email;
+export const getId = (state) => state.auth.id;
 export const isAuth = (state) => state.auth.isAuth;
 
 // Actions
 export const {
-  setStoreNickname, setStoreToken, setStoreEmail, changeAuth,
+  setStoreNickname, setStoreToken, setStoreEmail, changeAuth, setStoreId
 } = authSlice.actions;
 
 export default authSlice.reducer;

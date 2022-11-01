@@ -16,6 +16,7 @@ import {
   setStoreNickname,
   setStoreEmail,
   setStoreToken,
+  setStoreId,
   changeAuth,
   isAuth,
 } from '../store/slices/auth';
@@ -54,6 +55,7 @@ function Login() {
       dispatch(setStoreNickname(response.nickname));
       dispatch(setStoreEmail(response.email));
       dispatch(setStoreToken(response.token));
+      dispatch(setStoreId(response.id))
       dispatch(changeAuth());
       navigate('/');
     }

@@ -38,7 +38,12 @@ class LoginView(APIView):
         token = Token.objects.get(user=user)
 
         return Response(
-            {"token": token.key, "email": user.email, "nickname": user.nickname},
+            {
+                "id": user.id,
+                "token": token.key,
+                "email": user.email,
+                "nickname": user.nickname,
+            },
             status=status.HTTP_200_OK,
         )
 
@@ -85,6 +90,7 @@ class CreateAccountView(APIView):
             token_key = token.key
             feedback_data = AccountSerializer(account).data
             feedback_data["token"] = token_key
+            feedback_data["id"] = account.id
             return Response(feedback_data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
