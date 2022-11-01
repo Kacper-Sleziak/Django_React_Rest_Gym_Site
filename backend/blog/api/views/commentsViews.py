@@ -4,6 +4,7 @@ from blog.models import BlogPost
 from blog.models import Comment as CommentModel
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -12,9 +13,11 @@ from rest_framework.views import APIView
 
 class CreateCommentView(APIView):
     serializer_class = CreateCommentSerializer
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
+        print(request.headers)
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             new_comment = serializer.save()
