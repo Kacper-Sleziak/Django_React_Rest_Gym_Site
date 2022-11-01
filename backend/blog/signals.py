@@ -82,7 +82,7 @@ def LikeBlogPost(sender, instance, *args, **kwargs):
 
 @receiver(post_save, sender=CommentLike)
 def LikeComment(sender, instance, *args, **kwargs):
-    LikesHandler(instance.comments, 1)
+    LikesHandler(instance.comment, 1)
 
 
 # Handling decreasing number of likes of blog post
@@ -98,4 +98,4 @@ def UnLikeBlogPost(sender, instance, *args, **kwargs):
 
 @receiver(pre_delete, sender=CommentLike)
 def UnLikeBlogPost(sender, instance, *args, **kwargs):
-    LikesHandler(instance.comments, -1)
+    LikesHandler(instance.comment, -1)

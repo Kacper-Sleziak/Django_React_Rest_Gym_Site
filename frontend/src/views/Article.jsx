@@ -123,7 +123,7 @@ function Article(){
                         <>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                                    <Avatar alt="Remy Sharp" src={getAvatarSrc(comment.avatar)} />
                                 </ListItemAvatar>
                                 <ListItemText
                                     secondary={
@@ -135,7 +135,7 @@ function Article(){
                                             color="text.primary"s
                                         >
                                             {comment.author}
-                                        </Typography >1
+                                        </Typography >
 
                                         <Typography
                                             variant="body2"
@@ -151,7 +151,7 @@ function Article(){
                                     }
                                 />
                             <div>
-                                {RenderLikeIcon(comment.author)}
+                                {RenderLikeIcon(comment.likers)}
                                 <span>{comment.likes}</span>
                             </div>
                             
@@ -166,11 +166,19 @@ function Article(){
         }
     }
 
-    const RenderLikeIcon = (author) => {
-        if (userNickname === author){
+    const RenderLikeIcon = (likers) => {
+        if (likers.includes(userNickname)){
             return(<FavoriteIcon fontSize='small' sx={{marginTop:1}}/>)
         }
         return(<FavoriteBorderIcon fontSize='small' sx={{marginTop:1}}/>)
+    }
+
+    const getAvatarSrc = (img) => {
+        if (img === ""){
+            return "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png"
+        }
+        return serverIp + img 
+            
     }
 
     return (renderBlog())

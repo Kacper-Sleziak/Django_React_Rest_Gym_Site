@@ -69,9 +69,9 @@ class CommentView(APIView):
         if self.is_user_author_of_comment(request, comment):
             comment.delete()
             comment.save()
-            return Response(tatus=status.HTTP_200_OK)
+            return Response(status=status.HTTP_200_OK)
         else:
-            return Response(stauts=status.HTTP_403_FORBIDDEN)
+            return Response(status=status.HTTP_403_FORBIDDEN)
 
 
 # [GET] Returning all comments of blog post

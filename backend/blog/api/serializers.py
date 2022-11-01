@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from account.models import Account
+from user_profile.models import User_profile, avatar_upload_location
 from blog.models import BlogLike, BlogPost, Comment, CommentLike
 
 
@@ -55,11 +56,34 @@ class CreateCommentSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    avatar = serializers.SerializerMethodField()
     author = serializers.StringRelatedField()
+    likers = serializers.SerializerMethodField()
 
     class Meta:
         model = Comment
-        fields = ("body", "likes", "released_date", "edited", "author")
+        fields = (
+            "id",
+            "body",
+            "likes",
+            "released_date",
+            "edited",
+            "author",
+            "likers",
+            "avatar",
+        )
+
+    def get_likers(self, obj):
+        likes = CommentLike.objects.filter(comment=obj)
+        likers = []
+        for like in likes:
+            likers.append(like.liker.nickname)
+
+        return likers
+
+    def get_avatar(self, obj):
+        user_profile = User_profile.objects.get(account=obj.author)
+        return str(user_profile.avatar) or ""
 
 
 class BlogLikeSerializer(serializers.ModelSerializer):
