@@ -11,17 +11,20 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Pagination from '@mui/material/Pagination';
+import TextField from '@mui/material/TextField';
 import '../static/css/article.css';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Divider from '@mui/material/Divider';
 import { getNickname }from '../store/slices/auth';
+import Button from '@mui/material/Button';
 
 function Article(){  
     let { slug } = useParams();
     const serverIp = "http://127.0.0.1:8000/"
     
     const [currentPage, setCurrentPage] = useState(1);
+    const [newComment, setNewComment] = useState("");
     var totalCommentPages = 0;
     const commentsPerPage = 6;
 
@@ -38,6 +41,11 @@ function Article(){
         method: 'GET',
         url: `/blog/comment/${slug}/?page=${currentPage}`,
       });
+
+    const addNewComment = () => {
+        console.log(newComment)
+        setNewComment("")
+    }
 
     const onPageChange = (event, page) => {
         if (currentPage !== page){
@@ -92,6 +100,46 @@ function Article(){
                             borderColor:"#339900",
                             borderTopStyle:"solid",
                             }}>
+
+                            <ListItem alignItems="flex-start">
+                                <ListItemAvatar>
+                                    <Avatar alt="Remy Sharp" src={getAvatarSrc("")} />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    secondary={
+                                        <React.Fragment>
+                                        <Typography
+                                            sx={{ display: 'inline' }}
+                                            component="span"
+                                            variant="body2"
+                                            color="text.primary"s
+                                        >
+                                        </Typography >
+                                        <TextField
+                                            id="outlined-textarea"
+                                            label="Comment"
+                                            color="success"
+                                            value={newComment}
+                                            multiline
+                                            onChange={(e) => setNewComment(e.target.value)}
+                                            />
+                                        <Button 
+                                            variant="contained" 
+                                            color="success" 
+                                            size="small"
+                                            onClick={addNewComment}
+                                            >
+                                            Add New
+                                        </Button>
+                                        </React.Fragment>
+                                    }
+                                    
+                                />
+
+                            
+                            </ListItem>
+                            <Divider variant="inset" component="li" />
+
                             {renderComments()}
                         </List>
 
@@ -132,7 +180,7 @@ function Article(){
                                             sx={{ display: 'inline' }}
                                             component="span"
                                             variant="body2"
-                                            color="text.primary"s
+                                            color="text.primary"
                                         >
                                             {comment.author}
                                         </Typography >
