@@ -1,11 +1,22 @@
 import axios from 'axios';
+import {store} from '../store/store'
 
 const BASE_URL = 'http://127.0.0.1:8000/';
 
-export default axios.create({
+const defaultOptions = {
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
+};
+
+let instance = axios.create(defaultOptions);
+
+instance.interceptors.request.use(function (config) {
+  let token = store.getState()['auth'].token
+  config.headers.Authorization = `Token ${token}`;
+  return config;
 });
+
+export default instance;

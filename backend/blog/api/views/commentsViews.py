@@ -13,11 +13,10 @@ from rest_framework.views import APIView
 
 class CreateCommentView(APIView):
     serializer_class = CreateCommentSerializer
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
-        print(request.headers)
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             new_comment = serializer.save()

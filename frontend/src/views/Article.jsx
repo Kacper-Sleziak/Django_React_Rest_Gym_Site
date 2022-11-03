@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import axiosInstance from '../api/api_main_config';
-import getAuthAxiosInstance from '../api/api_main_config';
 import { useSelector } from 'react-redux';
 import useAxios from '../hooks/useAxios';
 import ListItemText from '@mui/material/ListItemText';
@@ -57,10 +56,11 @@ function Article(){
     // new comment api handler
     const [newComResponse, newComStatusCode, newComError, newComLoading, axiosFetch] = useAxiosFunction();
 
+
     const addNewComment = () => {
         const postId = response.data.id 
         axiosFetch({
-            axiosInstance: getAuthAxiosInstance(userToken),
+            axiosInstance: axiosInstance,
             method: 'POST',
             url: '/blog/comment/create/',
             requestConfig: {
