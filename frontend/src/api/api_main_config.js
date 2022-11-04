@@ -15,7 +15,10 @@ let instance = axios.create(defaultOptions);
 
 instance.interceptors.request.use(function (config) {
   let token = store.getState()['auth'].token
-  config.headers.Authorization = `Token ${token}`;
+  
+  if (token !== undefined){
+    config.headers.Authorization = `Token ${token}`;
+  }
   return config;
 });
 

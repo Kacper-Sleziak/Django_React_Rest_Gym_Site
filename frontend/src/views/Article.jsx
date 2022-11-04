@@ -1,43 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import axiosInstance from '../api/api_main_config';
-import { useSelector } from 'react-redux';
 import useAxios from '../hooks/useAxios';
-import ListItemText from '@mui/material/ListItemText';
-import Avatar from '@mui/material/Avatar';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Pagination from '@mui/material/Pagination';
-import TextField from '@mui/material/TextField';
 import '../static/css/article.css';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import Divider from '@mui/material/Divider';
-import { getNickname, getId, getToken }from '../store/slices/auth';
-import Button from '@mui/material/Button';
-import useAxiosFunction from '../hooks/useAxiosFunction';
+import CommentSection from '../components/article/CommentsSection';
 
 function Article(){  
 
     
     let { slug } = useParams();
-    const serverIp = "http://127.0.0.1:8000/"
-    
-    // states
-    const [currentPage, setCurrentPage] = useState(1);
-    const [newComment, setNewComment] = useState("");
-    
-    // comments settings
-    var totalCommentPages = 0;
-    const commentsPerPage = 6;
-
-    // informations abour user
-    const userNickname = useSelector(getNickname);
-    const userId = useSelector(getId);
-    const userToken = useSelector(getToken);
+    const serverIp = "http://127.0.0.1:8000/" 
 
     // articles api handler
     const [response, error, loading, refetch] = useAxios({
@@ -46,39 +20,6 @@ function Article(){
         url: `/blog/${slug}`,
       });
     
-    // comments api handler
-    const [comResponse, comError, comLoading, comRefetch] = useAxios({
-        axiosInstance: axiosInstance,
-        method: 'GET',
-        url: `/blog/comment/${slug}/?page=${currentPage}`,
-      });
-    
-    // new comment api handler
-    const [newComResponse, newComStatusCode, newComError, newComLoading, axiosFetch] = useAxiosFunction();
-
-
-    const addNewComment = () => {
-        const postId = response.data.id 
-        axiosFetch({
-            axiosInstance: axiosInstance,
-            method: 'POST',
-            url: '/blog/comment/create/',
-            requestConfig: {
-                author: userId,
-                blog_post: postId,
-                body: newComment,
-              },
-        });
-        setNewComment("")
-    };
-
-    const onPageChange = (event, page) => {
-        if (currentPage !== page){
-          setCurrentPage(page)
-          comRefetch()
-        }
-      }
-
       const renderBlog = () => {
         if (response === undefined){
             return(<h1>Loading...</h1>)
@@ -118,141 +59,12 @@ function Article(){
                                 Comments
                          </Typography>
 
-                        <List sx={{ 
-                            width: '100%', 
-                            maxWidth: 360, 
-                            borderWidth: 1,
-                            borderColor:"#339900",
-                            borderTopStyle:"solid",
-                            }}>
-
-                            <ListItem alignItems="flex-start">
-                                <ListItemAvatar>
-                                    <Avatar alt="Remy Sharp" src={getAvatarSrc("")} />
-                                </ListItemAvatar>
-                                <ListItemText
-                                    secondary={
-                                        <React.Fragment>
-                                        <Typography
-                                            sx={{ display: 'inline' }}
-                                            component="span"
-                                            variant="body2"
-                                            color="text.primary"s
-                                        >
-                                        </Typography >
-                                        <TextField
-                                            id="outlined-textarea"
-                                            label="Comment"
-                                            color="success"
-                                            value={newComment}
-                                            multiline
-                                            onChange={(e) => setNewComment(e.target.value)}
-                                            />
-                                        <Button 
-                                            variant="contained" 
-                                            color="success" 
-                                            size="small"
-                                            onClick={addNewComment}
-                                            >
-                                            Add New
-                                        </Button>
-                                        </React.Fragment>
-                                    }
-                                    
-                                />
-
-                            
-                            </ListItem>
-                            <Divider variant="inset" component="li" />
-
-                            {renderComments()}
-                        </List>
-
-                        <Pagination 
-                        shape="rounded"
-                        onChange={onPageChange}
-                        count={totalCommentPages} 
-                        page={currentPage}
-                        sx={{marginTop:2}}
-                        />
+                        <CommentSection serverIp={serverIp} slug={slug} postId={response.data.id}/>
                     </Box>
                 )
             }
         }
       }
-
-      const renderComments = () => {
-        if (comResponse === undefined){
-            return(<h1>Loading...</h1>)
-        }
-        else{
-            if (comResponse.status !== 200) {
-                return(<h2>No comments to show</h2>)
-            }
-            else{
-                totalCommentPages = Math.ceil(comResponse.data.count/commentsPerPage)
-                return(
-                    comResponse.data.results.map((comment) => (
-                        <>
-                            <ListItem alignItems="flex-start">
-                                <ListItemAvatar>
-                                    <Avatar alt="Remy Sharp" src={getAvatarSrc(comment.avatar)} />
-                                </ListItemAvatar>
-                                <ListItemText
-                                    secondary={
-                                        <React.Fragment>
-                                        <Typography
-                                            sx={{ display: 'inline' }}
-                                            component="span"
-                                            variant="body2"
-                                            color="text.primary"
-                                        >
-                                            {comment.author}
-                                        </Typography >
-
-                                        <Typography
-                                            variant="body2"
-                                            color="text.secondary"
-                                            sx={{marginBottom:1}}
-                                        >
-                                            {comment.edited}
-                                        </Typography>
-                                        <div>
-                                            {comment.body}
-                                        </div>
-                                        </React.Fragment>
-                                    }
-                                />
-                            <div>
-                                {RenderLikeIcon(comment.likers)}
-                                <span>{comment.likes}</span>
-                            </div>
-                            
-                            </ListItem>
-                            <Divider variant="inset" component="li" />
-
-                        </>
-
-                    ))
-                  ); 
-            }
-        }
-    }
-
-    const RenderLikeIcon = (likers) => {
-        if (likers.includes(userNickname)){
-            return(<FavoriteIcon fontSize='small' sx={{marginTop:1}}/>)
-        }
-        return(<FavoriteBorderIcon fontSize='small' sx={{marginTop:1}}/>)
-    }
-
-    const getAvatarSrc = (img) => {
-        if (img === ""){
-            return "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png"
-        }
-        return serverIp + img 
-            
-    }
 
     return (renderBlog())
 }
