@@ -4,7 +4,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import axiosInstance from '../api/api_main_config';
 import useAxios from '../hooks/useAxios';
+import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import '../static/css/article.css';
+import Divider from '@mui/material/Divider';
 import CommentSection from '../components/article/CommentsSection';
 
 function Article(){  
@@ -40,10 +42,7 @@ function Article(){
                             <Typography variant="h5" gutterBottom>
                                 {response.data.last_update}
                             </Typography>
-                            
-                            <Typography variant="h6" gutterBottom>
-                                Author: {response.data.author}
-                            </Typography>
+
                             <img className="article_img" src={serverIp + response.data.image} alt={response.data.title} />
              
                             <Typography 
@@ -54,11 +53,22 @@ function Article(){
                                 {response.data.body}
                             </Typography>
                         </div>
+                        <Divider/>
+                        <Typography 
+                            variant="h6" 
+                            gutterBottom
+                            sx={{marginTop:"5px"}}
+                        >
+                                Author: {response.data.author}
+                            </Typography>
+                        <ThumbUpAltOutlinedIcon 
+                        size="large"
+                        />
+                        <span>{response.data.likes}</span>
 
-                        <Typography variant="h4" gutterBottom sx={{marginTop:10}}>
+                        <Typography variant="h4" gutterBottom sx={{marginTop:5}}>
                                 Comments
                          </Typography>
-
                         <CommentSection serverIp={serverIp} slug={slug} postId={response.data.id}/>
                     </Box>
                 )

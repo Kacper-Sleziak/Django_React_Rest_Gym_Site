@@ -29,10 +29,11 @@ function Comment({comment}){
             
     }
 
-    return(                        <>
+    return(
+        <>
         <ListItem alignItems="flex-start">
             <ListItemAvatar>
-                <Avatar alt="Remy Sharp" src={getAvatarSrc(comment.avatar)} />
+                <Avatar alt="User" src={getAvatarSrc(comment.avatar)} />
             </ListItemAvatar>
             <ListItemText
                 secondary={
@@ -66,7 +67,6 @@ function Comment({comment}){
         
         </ListItem>
         <Divider variant="inset" component="li" />
-
     </>
     )
 }

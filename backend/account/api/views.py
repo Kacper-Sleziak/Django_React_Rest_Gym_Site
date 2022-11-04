@@ -14,7 +14,7 @@ from account.api.serializers import (
 from account.models import Account as AccountModel
 
 
-def is_account_with_given_id(self, pk):
+def is_account_with_given_id(pk):
 
     queryset = AccountModel.objects.filter(id=pk)
 
@@ -55,7 +55,7 @@ class AccountView(APIView):
     serializer_class = AccountSerializer
 
     def get(self, request, pk, format=None):
-        if self.is_account_with_given_id(pk):
+        if is_account_with_given_id(pk):
             return Response(
                 self.serializer_class(request.data), status=status.HTTP_200_OK
             )

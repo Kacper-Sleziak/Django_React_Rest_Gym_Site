@@ -50,6 +50,7 @@ function CommentSection(props){
                 },
         });
         setNewComment("")
+        refetch()
     };
 
     // handle change of page in pagination bar 
@@ -78,7 +79,7 @@ function CommentSection(props){
             }
         }
     }
-    
+
     const getAvatarSrc = (img) => {
         if (img === ""){
             return "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png"
